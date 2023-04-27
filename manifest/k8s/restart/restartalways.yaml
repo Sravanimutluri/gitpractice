@@ -4,6 +4,7 @@ kind: Pod
 metadata:
   name: restartalways
 spec:
+  restartPolicy: Always
   containers:
     - name: alpine
       image: alpine
