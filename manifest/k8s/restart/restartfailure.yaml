@@ -1,0 +1,26 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: restartfailure
+spec:
+  restartPolicy: onfailure
+  containers:
+    - name: failure
+      image: alpine
+      args:
+        - sleep
+        - 3sm
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: restartfailure2
+spec:
+  restartPolicy: Onfailure
+  containers:
+    - name: success
+      image: alpine
+      args:
+        - sleep
+        - 3s
