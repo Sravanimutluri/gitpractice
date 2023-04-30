@@ -10,7 +10,7 @@ spec:
       image: alpine
       args:
         - sleep
-        - 3sm
+        - 3SM
 ---
 apiVersion: v1
 kind: Pod
