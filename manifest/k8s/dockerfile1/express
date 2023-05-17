@@ -1,0 +1,50 @@
+FROM node
+LABEL Name="VK" 
+LABEL Project = "docker"
+RUN apk add --update npm && apk add git
+RUN git clone https://github.com/expressjs/express 
+RUN cd express
+RUN npm install express
+RUN npm install -g express-generator@4
+RUN mkdir /express/tmp/foo && mkdir /express/tmp/foo
+RUN npm install
+WORKDIR /tmp/foo
+EXPOSE 3000
+CMD [ "npm", "start"]
+
+FROM ubuntu:22.04
+LABEL author="KRSIHNA" organization="khaja.tec" project="nodejs"
+RUN apt update
+RUN apt install git -y
+RUN apt install npm -y
+RUN git clone https://github.com/expressjs/express.git
+WORKDIR /express
+RUN npm install express
+RUN npm install -g express-generator@4
+RUN express /tmp/foo
+RUN cd /tmp/foo
+WORKDIR /tmp/foo
+RUN npm install
+EXPOSE 3000
+CMD ["npm", "start"]
+
+
+FROM amazoncorretto:11
+RUN curl https://referenceapplicationskhaja.s3.us-west-2.amazonaws.com/spring-petclinic-2.4.2.jar
+EXPOSE 8080
+CMD ["java", "-jar", "spring-petclinic-2.4.2.jar"]
+
+FROM ubuntu:22.04
+LABEL author="KRSIHNA" organization="khaja.tec" project="nodejs"
+RUN apt update
+RUN apt install git -y
+RUN apt install npm -y
+RUN git clone https://github.com/expressjs/express.git
+RUN cd express
+RUN apt  install npm express -y
+RUN apt  install npm -g express-generator@4
+RUN express /tmp/foo
+RUN cd /tmp/foo
+WORKDIR /tmp/foo
+EXPOSE 3000
+CMD ["npm", "start"]

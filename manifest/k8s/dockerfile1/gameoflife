@@ -1,14 +1,9 @@
-FROM openjdk:8-jdk-alpine
-WORKDIR /app
-COPY gameoflife.war /app
-RUN apk add --update --no-cache curl tar \
-    && mkdir /usr/local/tomcat \
-    && curl -SL https://www.apache.org/dist/tomcat/tomcat-9/v9.0.50/bin/apache-tomcat-9.0.50.tar.gz \
-    | tar -xzC /usr/local/tomcat --strip-components=1 \
-    && apk del curl tar \
-    && rm -rf /usr/local/tomcat/webapps/*
-ENV CATALINA_HOME=/usr/local/tomcat
-ENV PATH $CATALINA_HOME/bin:$PATH
-ENV CATALINA_OPTS="-Xms512M -Xmx1024M -Djava.awt.headless=true -XX:MaxPermSize=1024m -Dfile.encoding=UTF-8"
+FROM tomcat:9-jdk8
+LABEL author="sravani"
+ADD https://referenceapplicationskhaja.s3.us-west-2.amazonaws.com/gameoflife.war /usr/local/tomcat/webapps/gameoflife.war
 EXPOSE 8080
-CMD ["catalina.sh", "run"]
+---
+FROM node:14-alpine
+WORKDIR /app
+RUN apk --no-cache add curl
+CMD ["node", "index.js"]
