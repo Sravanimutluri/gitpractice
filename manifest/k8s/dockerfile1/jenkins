@@ -4,9 +4,9 @@ RUN apt update -y
 RUN apt install apache2 -y
 
 
-MANUAL STEEPS FOR JENKINS install
-apt update
-apt install openjdk-11-jdk
+### MANUAL STEEPS FOR JENKINS install
+# apt update
+# apt install openjdk-11-jdk
 
 
 FROM ubuntu:22.04
