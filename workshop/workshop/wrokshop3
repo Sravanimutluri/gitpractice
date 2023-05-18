@@ -27,3 +27,19 @@ Now build the image by using following command
 [!Preview](./workshop4.png)
 
 ### Create a ubuntu container with sleep 1d and then login using exec and install python
+login to docker playground in terminal
+By using Dockerfile and create container
+---
+FROM ubuntu:20.04
+LABEL author="sravani" organization="techinfo" project="python"
+RUN apt update && apt upgrade -y
+RUN apt install python3 -y
+CMD ["python3 --version","sleep","1d"]
+---
+Now build the image by using following command
+---
+<docker image build -t srinivas .>
+<docker image ls>
+---
+[!preview](./workshop5.png)
+[!preview](./workshop6.png)
