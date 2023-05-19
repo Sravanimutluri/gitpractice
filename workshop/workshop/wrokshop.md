@@ -71,7 +71,7 @@
 * ![Preview](./workshop12.png)
 
 ### Try to create a docker file which runs php info page, use ARG and ENV wherever appropriate on
-* apache server
+# apache server
 * login to docker playground in terminal and create a dockerfile for apache server
 * ---
 * FROM ubuntu:22.04
@@ -94,7 +94,7 @@
 * Now we observe the port number and open that port.
 * ![Preview](./workshop15.png)
 
-* nginx server
+# nginx server
 * login to docker playground in terminal and create a dockerfile for nginx server
 * ---
 * FROM ubuntu:22.04
@@ -121,4 +121,25 @@
 * ![Preview](./workshop17.png)
 
 ### Create a Jenkins image by creating an own docker file
-* 
+* login to docker playground in terminal and create a dockerfile for jenkins server
+* ---
+* FROM ubuntu:22.04
+  LABEL author="sravani" organization="techinfo" project="jenkins"
+  RUN apt update && apt install openjdk-11-jdk maven curl -y
+  RUN curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | tee \
+      /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+  RUN echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+      https://pkg.jenkins.io/debian-stable binary/ | tee \
+      /etc/apt/sources.list.d/jenkins.list > /dev/null
+  RUN apt-get update 
+  RUN apt-get install jenkins -y
+  EXPOSE 8080
+  CMD ["/usr/bin/jenkins"]
+* ---
+* After creating dockerfile to build the image use the following commands.
+* ---
+* docker image build -t sravani .
+* docker container run -d --name sravani -P jenkins/jenkins
+* ---
+* ![Preview](./workshop18.png)
+* ![Preview](./workshop19.png) 
