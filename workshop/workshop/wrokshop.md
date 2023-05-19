@@ -93,3 +93,32 @@
 * ![preview](./workshop14.png)
 * Now we observe the port number and open that port.
 * ![Preview](./workshop15.png)
+
+* nginx server
+* login to docker playground in terminal and create a dockerfile for nginx server
+* ---
+* FROM ubuntu:22.04
+  LABEL author="sravani" organization="techinfo" project="nginx"
+  ARG DEBIAN_FRONTEND=noninteractive
+  RUN apt update && apt upgrade -y
+  RUN apt install nginx -y
+  RUN apt install php php-fpm -y
+  RUN rm -rf /var/lib/apt/lists/
+  COPY nginx.conf /etc/nginx/sites-available/default
+  RUN chmod -R 777 /var/www/html
+  RUN echo "<?php phpinfo() ?>" >> /var/www/html/info.php
+  EXPOSE 80
+  ENTRYPOINT ["/bin/bash","-c","service php-fpm start && nginx -g 'daemon off;'"]
+  CMD ["nginx","-g","daemon off;"]
+* ```
+* After creating dockerfile to build the image use the following commands.
+* ---
+* docker image build -t nginx .
+* docker container run --name php -d -P nginx
+* docker container ls
+* ---
+* ![Preview](./workshop16.png)
+* ![Preview](./workshop17.png)
+
+### Create a Jenkins image by creating an own docker file
+* 
