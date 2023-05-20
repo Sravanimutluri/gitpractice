@@ -53,6 +53,12 @@
 * Docker architecture. Docker uses a client-server architecture. The Docker client talks to the Docker daemon, which does the heavy lifting of building, running, and distributing your Docker containers. The Docker client and daemon can run on the same system, or you can connect a Docker client to a remote Docker daemon.
 ![preview](./workshopg.png)
 
+#### DAY2
+### Write a Docker file for NodeJS application – expressjs
+
+
+#### DAY3
+### create a MySQL dB container from official MySQL image
 
 
 
@@ -67,23 +73,6 @@
 
 
 
-# Docker installation steps
-* To install docker firstly we have to create a linux machine.
-* Required commands for installation of docker
----
-* `sudo apt update`
-* `curl -fsSL https://get.docker.com -o get-docker.sh` && `sh get-docker.sh`
-* `sudo usermod -aG docker ubuntu`
----
-* Exit from the linux machine
-  * Reconnect it 
-  * type the command `docker info`
-  * DOCKER WORKBOOK – 1
-* RUNNING DOCKER CONTAINERS  
-* Run hello-world docker container and observe the container status?
-  * `docker container run -d -P --name myworld hello-world:latest`
-  * `docker container run -it -P --name myworld hello-world:latest`
-  * To see the container is running or not `docker container ls`
 
 #### DAY4
 ### Create an alpine container in interactive mode and install python
