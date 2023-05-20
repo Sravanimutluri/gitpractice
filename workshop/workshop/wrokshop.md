@@ -1,5 +1,67 @@
 #### DAY1
 # Run hello-world docker container and observe the container status
+* Create a container by using following commands
+---
+  * docker container hello-world
+  * docker container ls
+  * docker info
+---
+![preview](./workshopa.png)
+![preview](./workshopb.png)
+
+### Check the docker images and write down the size of hello-world image
+* To check the image size use the following command
+---
+  * docker image ls
+---
+![preview](./workshopc.png)
+
+### Run the nginx container with name as nginx1 and expose it on 8080 port on docker host
+* Create a container by using following commands
+---
+  * docker container run -d -p 8080:80 --name nginx1 nginx
+---
+![preview](./workshopd.png)
+![preview](./workshope.png)
+
+### Explain docker container lifecycle
+* Docker lifecycle has 6 states they are
+  *  1.Create
+  *  2.Run
+  *  3.Stop
+  *  4.Pause
+  *  5.Unpause
+  *  6.Delete
+* Above states explained with example below commands
+---
+  * docker container run -d -p --name sravani nginx
+  * docker container stop sravani
+  * docker container start sravani
+  * docker container pause sravani
+  * docker container unpause sravani
+  * docker container rm sravani
+---
+![preview](./workshopf.png)
+![preview](./workshopg.png)
+
+### Explain what happens when you run the docker container
+* The docker run command creates running container by using docker images and can run commands inside them. When using the docker run command, a container can run a action.
+* Show all the states of docker container on nginx based container
+![preview](./workshopd.png)
+
+### Explain the Docker architecture
+* Docker architecture. Docker uses a client-server architecture. The Docker client talks to the Docker daemon, which does the heavy lifting of building, running, and distributing your Docker containers. The Docker client and daemon can run on the same system, or you can connect a Docker client to a remote Docker daemon.
+![preview](./workshopg.png)
+
+
+
+
+
+
+
+
+
+
 
 
 
