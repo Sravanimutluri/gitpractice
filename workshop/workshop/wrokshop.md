@@ -147,21 +147,29 @@
 ### Create nop commerce and MySQL server and try to make them work by configuring
 # nop commerce
 * 
-* ---
+---
 * FROM mcr.microsoft.com/dotnet/sdk:7.0
   LABEL author="sravani" organization="techinfo" project="nopcommerce"
-  ADD https://github.com/nopSolutions/nopCommerce/releases/download/release-4.60.2/nopCommerce_4.60.2_NoSource_linux_x64.zip /nop/nopCommerce_4.60.2_NoSource_linux_x64.zip
+  ADD https://github.com/nopSolutions/nopCommerce/releases/download/release-4.60.2/nopCommerce_4.60.            2_NoSource_linux_x64.zip /nop/nopCommerce_4.60.2_NoSource_linux_x64.zip
   WORKDIR /nop
   RUN apt update && apt install unzip -y && \
       unzip /nop/nopCommerce_4.60.2_NoSource_linux_x64.zip && \
       mkdir /nop/bin && mkdir /nop/logs
   EXPOSE 5000
-  ENV ASPNETCORE_URLS="http:0.0.0.0.0:5000"
-  CMD ["dotnet","Nop.Web.dll"]
-* ---
-
-
-docker container run -d --name hema -e MYSQL_ROOT_PASSWORD=srinivas -e MYS
-QL_DATABASE=test -e MYSQL_USER=sravani -e MYSQL_PASSWORD=mutluri --network mysqlnetwork -v mysql:/var/lib/mysql mysql:5.6
-
-docker container run --name mynop1 -d -P --network mysqlnetwork -e MYSQL_SERVER=mysqldb nop
+  ENV ASPNETCORE_URLS="http://0.0.0.0.0:5000"
+  CMD [ "dotnet", "Nop.Web.dll" ]
+---
+* After creating dockerfile to build the image use the following commands.
+---
+* docker image build -t nop .
+* docker network create -d bridge --subnet "10.0.0.0/24" mysqlnetwork
+* docker volume create mysqlvolume
+* docker container run --name mynop1 -d -P --network mysqlnetwork -e MYSQL_SERVER=mysqldb nop
+* docker container run -d --name hema -e MYSQL_ROOT_PASSWORD=srinivas -e MYSQL_DATABASE=test -e MYSQL_USER=sravani -e MYSQL_PASSWORD=mutluri --network mysqlnetwork -v mysql:/var/lib/mysql mysql:5.6
+* docker container ls
+---
+* ![Preview](./workshop20.png) 
+* ![Preview](./workshop21.png) 
+* ![Preview](./workshop22.png)
+* ![Preview](./workshop23.png)
+* ![Preview](./workshop24.png)
