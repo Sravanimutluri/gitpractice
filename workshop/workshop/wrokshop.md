@@ -1,7 +1,6 @@
+#### DAY4
 ### Create an alpine container in interactive mode and install python
-* Manual ste* Create a container by using following commands
-* login to docker playground in terminal
-* Manual ste
+* Manual step
 * Create a container by using following commands
 * ---
 * <docker container run -it --name sravani alpine:latest>
@@ -9,9 +8,7 @@
 * apk add python3
 * <python3 --version>
 * ---
-* Manual ste* Create a container by using following commands
-* Manual ste* Create a container by using following commands
-
+* ![Preview](./workshop1.png)
 * ![Preview](./workshop2.png)
 * By using Dockerfile and create container
 * ---
@@ -174,4 +171,8 @@
 * ![Preview](./workshop23.png)
 * ![Preview](./workshop24.png)
 * ![Preview](./workshop25.png)
+
+#### DAY 5
+### Multi stage Docker file and push images to azure/aws registries and docker compose file for following applications
+## nopCommerce
 
