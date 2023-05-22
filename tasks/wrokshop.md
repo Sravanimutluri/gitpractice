@@ -51,11 +51,32 @@
 
 ### Explain the Docker architecture
 * Docker architecture. Docker uses a client-server architecture. The Docker client talks to the Docker daemon, which does the heavy lifting of building, running, and distributing your Docker containers. The Docker client and daemon can run on the same system, or you can connect a Docker client to a remote Docker daemon.
-![preview](./workshopg.png)
+![preview](./workshoph.png)
 
 #### DAY2
 ### Write a Docker file for NodeJS application – expressjs
-
+* Dockerfile
+---
+* FROM node:16-alpine
+* RUN apk add --update
+* RUN apk add git
+* RUN git clone https://github.com/expressjs/express.git
+* RUN cd express && \
+      npm install express && \
+      npm install -g express-generator@4 && \
+      express /tmp/foo
+* WORKDIR /tmp/foo
+* RUN npm install
+* EXPOSE 3000
+* CMD ["npm", "start"]
+---
+* To build the image excute the following commands
+---
+* docker image build -t node:16-alpine
+* docker container run -d --name sravani -P node
+---
+![preview](./workshopi.png)
+![preview](./workshopj.png)
 
 #### DAY3
 ### create a MySQL dB container from official MySQL image
