@@ -6,23 +6,23 @@
   * docker container ls
   * docker info
 ---
-![preview](./workshopa.png)
-![preview](./workshopb.png)
+![preview](./workshop1.png)
+![preview](./workshop2.png)
 
 ### Check the docker images and write down the size of hello-world image
 * To check the image size use the following command
 ---
   * docker image ls
 ---
-![preview](./workshopc.png)
+![preview](./workshop3.png)
 
 ### Run the nginx container with name as nginx1 and expose it on 8080 port on docker host
 * Create a container by using following commands
 ---
   * docker container run -d -p 8080:80 --name nginx1 nginx
 ---
-![preview](./workshopd.png)
-![preview](./workshope.png)
+![preview](./workshop4.png)
+![preview](./workshop5.png)
 
 ### Explain docker container lifecycle
 * Docker lifecycle has 6 states they are
@@ -41,17 +41,17 @@
   * docker container unpause sravani
   * docker container rm sravani
 ---
-![preview](./workshopf.png)
-![preview](./workshopg.png)
+![preview](./workshop6.png)
+![preview](./workshop7.png)
 
 ### Explain what happens when you run the docker container
 * The docker run command creates running container by using docker images and can run commands inside them. When using the docker run command, a container can run a action.
 * Show all the states of docker container on nginx based container
-![preview](./workshopd.png)
+![preview](./workshop4.png)
 
 ### Explain the Docker architecture
 * Docker architecture. Docker uses a client-server architecture. The Docker client talks to the Docker daemon, which does the heavy lifting of building, running, and distributing your Docker containers. The Docker client and daemon can run on the same system, or you can connect a Docker client to a remote Docker daemon.
-![preview](./workshoph.png)
+![preview](./workshop8.png)
 
 #### DAY2
 ### Write a Docker file for NodeJS application – expressjs
@@ -60,7 +60,19 @@
 * FROM node:16-alpine
 * RUN apk add --update
 * RUN apk add git
-* RUN git clone https://github.com/expressjs/express.git
+* RUN git clone https://github.com/expressjs/generator.git
+* RUN npm install -g express-generator
+* RUN express --view=hbs /tmp/foo && cd /tmp/foo
+* WORKDIR /tmp/foo
+* RUN npm install
+* EXPOSE 3000
+* CMD ["npm", "start"]
+---
+* To build the image excute the following commands
+* FROM node:16-alpine
+* RUN apk add --update
+* RUN apk add git
+* RUN git clone https://github.com/expressjs/generator.git
 * RUN cd express && \
       npm install express && \
       npm install -g express-generator@4 && \
@@ -70,30 +82,44 @@
 * EXPOSE 3000
 * CMD ["npm", "start"]
 ---
-* To build the image excute the following commands
----
-* docker image build -t node:16-alpine
+* docker image build -t node:16-alpine .
 * docker container run -d --name sravani -P node
 ---
-![preview](./workshopi.png)
-![preview](./workshopj.png)
+![preview](./workshop9.png)
+![preview](./workshop10.png)
+https://github.com/expressjs/express.git
 
 #### DAY3
 ### create a MySQL dB container from official MySQL image
+* Select a image to run container from docker hub and run the container by using following commands.
+---
+* docker container run -d --name mysqldb -e MYSQL_ROOT_PASSWORD=srinivas -e MYSQL_DATABASE=employees -e MYSQL_USER=sravani -e MYSQL_PASSWORD=mutluri -P mysql:8
+* docker container ls
+---
+![preview](./workshop12.png)
 
+### login into SQL container and create a table
+* To create a table we will enter inside the container and check the databases by using following commands
+---
+* docker container exec -it mysqldb mysql --password=srinivas
+* show databases;
+* use employees;
+* CREATE TABLE employees ( PersonID int, LastName varchar(255), FirstName varchar(255), Address varchar(255), City varchar(255) );
+* Insert into employees Values (1,'sravani','mutluri', 'ameerpet', 'hyd');
+* Insert into employees Values (2,'srinivas','mutluri', 'mallavalli', 'nud');
+* select * from employees;
+---
+![preview](./workshop13.png)
+![preview](./workshop14.png)
 
+## Try to create a persisted volume in MySQL container and mount that to other
 
-
-
-
-
-
-
-
-
-
-
-
+---
+docker container run -d --name sravani -v mysqldb:/var/lib/mysql -P -e MYSQL_ROOT_PASSWORD=rootroot -e MYSQL_DATABASE=students -e MYSQL-USER=sravani -e MYSQL_PASSWORD=rootroot mysql
+* docker container run -d --name sravani --mount "source=sravani,target=/var/lib/mysql,type=volume" -P -e MYSQL_ROOT_PASSWORD=rootroot -e MYSQL_DATABASE=students -e MYSQL-USER=sravani -e MYSQL_PASSWORD=rootroot mysql
+---
+![preview](./workshop15.png)
+![preview](./workshop16.png)
 
 #### DAY4
 ### Create an alpine container in interactive mode and install python
@@ -105,8 +131,8 @@
 * apk add python3
 * <python3 --version>
 * ---
-* ![Preview](./workshop1.png)
-* ![Preview](./workshop2.png)
+* ![Preview](./workshop17.png)
+* ![Preview](./workshop18.png)
 * By using Dockerfile and create container
 * ---
 * FROM alpine:latest
@@ -120,8 +146,8 @@
 * <docker image build -t python .>
 * <docker image ls>
 * ---
-* ![Preview](./workshop3.png)
-* ![Preview](./workshop4.png)
+* ![Preview](./workshop19.png)
+* ![Preview](./workshop20.png)
 
 ### Create a ubuntu container with sleep 1d and then login using exec and install python
 * login to docker playground in terminal and create container by using following commands.
@@ -132,10 +158,10 @@
 * apt install python3 -y
 * python3 --version
 * ---
-* ![Preview](./workshop5.png)
-* ![Preview](./workshop6.png)
-* ![Preview](./workshop7.png)
-* ![Preview](./workshop8.png)
+* ![Preview](./workshop21.png)
+* ![Preview](./workshop22.png)
+* ![Preview](./workshop23.png)
+* ![Preview](./workshop24.png)
 
 ### Create a postgres container with username panoramic and password as trekking. Try logging in and show the databases (query for psql)
 * login to docker playground in terminal and create postgres by using following commands
@@ -145,8 +171,8 @@
 * docker exec -it database /bin/bash
 * psql --help
 * ---
-* ![Preview](./workshop9.png)
-* ![Preview](./workshop10.png)
+* ![Preview](./workshop25.png)
+* ![Preview](./workshop26.png)
 * To create table 
 * ---
 * psql -U panoramic -W trekking -d psqldata
@@ -161,8 +187,8 @@
 * Insert into Persons Values (2, 'srinivas', 'mutluri', 'ameerpet', 'hyd'); 
 * SELECT * from Persons;
 * ---
-* ![Preview](./workshop11.png)
-* ![Preview](./workshop12.png)
+* ![Preview](./workshop27.png)
+* ![Preview](./workshop28.png)
 
 ### Try to create a docker file which runs php info page, use ARG and ENV wherever appropriate on
 # apache server
@@ -183,10 +209,10 @@
 * docker container run --name php -d -P apache
 * docker container ls
 * ---
-* ![preview](./workshop13.png)
-* ![preview](./workshop14.png)
+* ![preview](./workshop29.png)
+* ![preview](./workshop30.png)
 * Now we observe the port number and open that port.
-* ![Preview](./workshop15.png)
+* ![Preview](./workshop31.png)
 
 # nginx server
 * login to docker playground in terminal and create a dockerfile for nginx server
@@ -211,8 +237,8 @@
 * docker container run --name php -d -P nginx
 * docker container ls
 * ---
-* ![Preview](./workshop16.png)
-* ![Preview](./workshop17.png)
+* ![Preview](./workshop32.png)
+* ![Preview](./workshop33.png)
 
 ### Create a Jenkins image by creating an own docker file
 * login to docker playground in terminal and create a dockerfile for jenkins server
@@ -235,8 +261,8 @@
 * docker image build -t sravani .
 * docker container run -d --name sravani -P jenkins/jenkins
 * ---
-* ![Preview](./workshop18.png)
-* ![Preview](./workshop19.png) 
+* ![Preview](./workshop34.png)
+* ![Preview](./workshop35.png) 
 
 ### Create nop commerce and MySQL server and try to make them work by configuring
 # nop commerce
@@ -262,12 +288,12 @@
 * docker container run -d --name hema -e MYSQL_ROOT_PASSWORD=srinivas -e MYSQL_DATABASE=test -e MYSQL_USER=sravani -e MYSQL_PASSWORD=mutluri --network mysqlnetwork -v mysql:/var/lib/mysql mysql:5.6
 * docker container ls
 ---
-* ![Preview](./workshop20.png) 
-* ![Preview](./workshop21.png) 
-* ![Preview](./workshop22.png)
-* ![Preview](./workshop23.png)
-* ![Preview](./workshop24.png)
-* ![Preview](./workshop25.png)
+* ![Preview](./workshop36.png) 
+* ![Preview](./workshop37.png) 
+* ![Preview](./workshop38.png)
+* ![Preview](./workshop39.png)
+* ![Preview](./workshop40.png)
+* ![Preview](./workshop41.png)
 
 #### DAY 5
 ### Multi stage Docker file and push images to azure/aws registries and docker compose file for following applications
