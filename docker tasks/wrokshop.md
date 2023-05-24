@@ -318,6 +318,43 @@ docker container run -d --name sravani -v mysqldb:/var/lib/mysql -P -e MYSQL_ROO
 * ![Preview](./workshop43.png)
 * ![Preview](./workshop44.png)
 
+## game of life
+* Dockerfile
+---
+FROM alpine/git AS vcs
+RUN cd / && git clone https://github.com/wakaleo/game-of-life.git && \
+    pwd && ls /gameoflife
+
+FROM maven:3-amazoncorretto-8 AS builder
+COPY --from=vcs /game-of-life /game-of-life
+RUN ls /game-of-life
+RUN cd /game-of-life && mvn package
+
+FROM tomcat:9-jdk8
+LABEL author="sravani"
+COPY --from=builder /game-of-life/gameoflife-web/target/*.war /usr/local/tomcat/webapps/gameoflife.war
+EXPOSE 8080
+ ---
+* To build and run the docker file by using following commands
+---
+* docker image build -t gol .
+* docker container run --name sravani -d -P gol
+* docker container ls
+---
+* ![Preview](./workshop45.png)
+* ![Preview](./workshop46.png)
+* ![Preview](./workshop47.png)
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## nopCommerce
