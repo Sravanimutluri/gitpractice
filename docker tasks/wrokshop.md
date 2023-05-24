@@ -285,6 +285,41 @@ docker container run -d --name sravani -v mysqldb:/var/lib/mysql -P -e MYSQL_ROO
 
 #### DAY 5
 ### Multi stage Docker file and push images to azure/aws registries and docker compose file for following applications
+
+## spring pet clinic
+
+* Dockerfile
+---
+* FROM alpine/git AS vcs
+* RUN cd / && git clone https://github.com/spring-projects/spring-petclinic.git && \
+    pwd && ls /spring-petclinic
+
+* FROM maven:3-amazoncorretto-17 AS builder
+* COPY --from=vcs /spring-petclinic /spring-petclinic
+* RUN ls /spring-petclinic
+* RUN cd /spring-petclinic && mvn package
+
+* FROM amazoncorretto:17-alpine-jdk
+* LABEL author="sravani"
+* EXPOSE 8080
+* ARG HOME_DIR=/spc
+* WORKDIR ${HOME_DIR}
+* COPY --from=builder /spring-petclinic/target/spring-*.jar ${HOME_DIR}/spring-petclinic.jar
+* EXPOSE 8080
+* CMD ["java", "-jar", "spring-petclinic.jar"]
+---
+* To build and run the docker file by using following commands
+---
+* docker image build -t spc .
+* docker container run --name sravani1 -d -P spc
+* docker container ls
+---
+* ![Preview](./workshop42.png)
+* ![Preview](./workshop43.png)
+* ![Preview](./workshop44.png)
+
+
+
 ## nopCommerce
 
 
@@ -319,16 +354,64 @@ docker container run -d --name sravani -v mysqldb:/var/lib/mysql -P -e MYSQL_ROO
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+* FROM ubuntu:22.04 AS extractor
+* RUN apt update && apt install unzip
+* ARG DOWNLOAD_URL=https://github.com/nopSolutions/nopCommerce/releases/download/release-4.60.2/nopCommerce_4.60.2_NoSource_linux_x64.zip
+* ADD ${DOWNLOAF_URL} /nopCommerce/nopCommerce_4.60.2_NoSource_linux_x64.zip
+* RUN cd /nopCommerce && unzip nopCommerce_4.60.2_NoSource_linux_x64.zip && mkdir bin logs && rm nopCommerce_4.60.2_NoSource_linux_x64.zip
+
+* FROM mcr.microsoft.com/dotnet/sdk:7.0
+* LABEL author="sravani"
+* ARG user=nopcommerce
+* ARG group=nopcommerce
+* ARG uid=1000
+* ARG gid=1000
+* ARG DOWNLOAD_URL=https://github.com/nopSolutions/nopCommerce/releases/download/release-4.60.2/nopCommerce_4.60.2_NoSource_linux_x64.zip
+* ARG HOME_DIR=/nop
+* RUN apt update && apt install unzip -y
+#Create user nopcommerce
+* RUN groupadd -g ${gid} ${group} \
+    && useradd -d "$HOME_DIR" -u ${uid} -g ${gid} -m -s /bin/bash ${user}
+USER ${user}
+WORKDIR ${HOME_DIR}
+COPY --from=extractor /nopCommerce ${HOME_DIR}
+EXPOSE 5000
+ENV ASPNETCORE_URLS="http://0.0.0.0:5000"
+CMD ["dotnet", "Nop.Web.dll"]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 FROM alpine/git AS vcs
-RUN git clone https://github.com/spring-projects/spring-petclinic.git && \
-    pwd && ls /git/spring-petclinc
+RUN cd / && git clone https://github.com/spring-projects/spring-petclinic.git && \
+    pwd && ls /spring-petclinic
 
 
 FROM maven:3-amazoncorretto-17 AS builder
-COPY --from=vcs /git /spring-petclinic
+COPY --from=vcs /spring-petclinic /spring-petclinic
 RUN ls /spring-petclinic
-RUN cd spring-petclinic
-RUN mvn package
+RUN cd /spring-petclinic && mvn package
 
 
 FROM amazoncorretto:17-alpine-jdk
