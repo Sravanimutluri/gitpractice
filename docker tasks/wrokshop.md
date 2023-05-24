@@ -334,7 +334,9 @@ FROM tomcat:9-jdk8
 LABEL author="sravani"
 COPY --from=builder /game-of-life/gameoflife-web/target/*.war /usr/local/tomcat/webapps/gameoflife.war
 EXPOSE 8080
- ---
+
+---
+
 * To build and run the docker file by using following commands
 ---
 * docker image build -t gol .
@@ -345,38 +347,36 @@ EXPOSE 8080
 * ![Preview](./workshop46.png)
 * ![Preview](./workshop47.png)
 
-
-
-
-
-
-
-
-
-
-
-
-
 ## nopCommerce
+* Dockerfile
+---
+FROM ubuntu:22.04 as nopCommerce
+RUN apt update && apt install unzip -y
+ARG DOWNLOAD_URL=https://github.com/nopSolutions/nopCommerce/releases/download/release-4.60.2/nopCommerce_4.60.2_NoSource_linux_x64.zip
+ADD ${DOWNLOAD_URL} /nopCommerce/nopCommerce_4.60.2_NoSource_linux_x64.zip
+RUN cd /nopCommerce && unzip nopCommerce_4.60.2_NoSource_linux_x64.zip && \
+mkdir bin logs && rm nopCommerce_4.60.2_NoSource_linux_x64.zip
 
+FROM mcr.microsoft.com/dotnet/sdk:7.0
+LABEL author="manu" organization="khaja.tech" project="nop"
+ARG DIRECTORY=/nop
+WORKDIR ${DIRECTORY}
+COPY --from=nopCommerce  /nopCommerce ${DIRECTORY}
+EXPOSE 5000
+ENV ASNETCORE_URLS="http://0.0.0.0:5000"
+CMD ["dotnet","Nop.Web.dll"] 
 
-## stage-1
-  FROM ubuntu:22.04 as nopCommerce
-  RUN apt update && apt install unzip -y
-  ARG DOWNLOAD_URL=https://github.com/nopSolutions/nopCommerce/releases/download/release-4.60.2/nopCommerce_4.60.2_NoSource_linux_x64.zip
-  ADD ${DOWNLOAD_URL} /nopCommerce/nopCommerce_4.60.2_NoSource_linux_x64.zip
-  RUN cd /nopCommerce && unzip nopCommerce_4.60.2_NoSource_linux_x64.zip && \
-  mkdir bin logs && rm nopCommerce_4.60.2_NoSource_linux_x64.zip
-## stage-2
-  FROM mcr.microsoft.com/dotnet/sdk:7.0
-  LABEL author="manu" organization="khaja.tech" project="nop"
-  ARG DIRECTORY=/nop
-  WORKDIR ${DIRECTORY}
-  COPY --from=nopCommerce  /nopCommerce ${DIRECTORY}
-  EXPOSE 5000
-  ENV ASNETCORE_URLS="http://0.0.0.0:5000"
-  CMD ["dotnet","Nop.Web.dll","--urls","http://0.0.0.0:5000"] 
-  
+---
+* To build and run the docker file by using following commands
+---
+* docker image build -t nop .
+* docker container run --name sravani -d -P nop
+* docker container ls
+---
+* ![Preview](./workshop48.png)
+* ![Preview](./workshop49.png)
+* ![Preview](./workshop50.png)
+
 
 
 
