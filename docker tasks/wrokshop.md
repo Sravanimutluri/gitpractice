@@ -60,19 +60,7 @@
 * FROM node:16-alpine
 * RUN apk add --update
 * RUN apk add git
-* RUN git clone https://github.com/expressjs/generator.git
-* RUN npm install -g express-generator
-* RUN express --view=hbs /tmp/foo && cd /tmp/foo
-* WORKDIR /tmp/foo
-* RUN npm install
-* EXPOSE 3000
-* CMD ["npm", "start"]
----
-* To build the image excute the following commands
-* FROM node:16-alpine
-* RUN apk add --update
-* RUN apk add git
-* RUN git clone https://github.com/expressjs/generator.git
+* RUN git clone https://github.com/expressjs/express.git
 * RUN cd express && \
       npm install express && \
       npm install -g express-generator@4 && \
@@ -83,11 +71,11 @@
 * CMD ["npm", "start"]
 ---
 * docker image build -t node:16-alpine .
-* docker container run -d --name sravani -P node
+* docker container run -d --name sravani -P node:16-alpine
 ---
 ![preview](./workshop9.png)
 ![preview](./workshop10.png)
-https://github.com/expressjs/express.git
+![preview](./workshop11.png)
 
 #### DAY3
 ### create a MySQL dB container from official MySQL image
@@ -317,3 +305,37 @@ docker container run -d --name sravani -v mysqldb:/var/lib/mysql -P -e MYSQL_ROO
   ENV ASNETCORE_URLS="http://0.0.0.0:5000"
   CMD ["dotnet","Nop.Web.dll","--urls","http://0.0.0.0:5000"] 
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FROM alpine/git AS vcs
+RUN git clone https://github.com/spring-projects/spring-petclinic.git && \
+    pwd && ls /git/spring-petclinc
+
+
+FROM maven:3-amazoncorretto-17 AS builder
+COPY --from=vcs /git /spring-petclinic
+RUN ls /spring-petclinic
+RUN cd spring-petclinic
+RUN mvn package
+
+
+FROM amazoncorretto:17-alpine-jdk
+LABEL author="sravani"
+EXPOSE 8080
+ARG HOME_DIR=/spc
+WORKDIR ${HOME_DIR}
+COPY --from=builder /spring-petclinic/target/spring-*.jar ${HOME_DIR}/spring-petclinic.jar
+EXPOSE 8080
+CMD ["java", "-jar", "spring-petclinic.jar"]
