@@ -417,7 +417,7 @@ RUN git clone https://github.com/manohargatla/StudentCoursesRestAPI.git /Student
 
 
 FROM python:3.7-alpine
-LABEL author="Manohar" project="StudentCoursesRestAPI"
+LABEL author="sravani" project="StudentCoursesRestAPI"
 COPY --from=source /StudentCoursesRestAPI /StudentCoursesRestAPI
 WORKDIR /StudentCoursesRestAPI 
 RUN pip install --upgrade pip 
