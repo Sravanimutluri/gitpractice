@@ -334,7 +334,6 @@ FROM tomcat:9-jdk8
 LABEL author="sravani"
 COPY --from=builder /game-of-life/gameoflife-web/target/*.war /usr/local/tomcat/webapps/gameoflife.war
 EXPOSE 8080
-
 ---
 
 * To build and run the docker file by using following commands
@@ -365,7 +364,6 @@ COPY --from=nopCommerce  /nopCommerce ${DIRECTORY}
 EXPOSE 5000
 ENV ASNETCORE_URLS="http://0.0.0.0:5000"
 CMD ["dotnet","Nop.Web.dll"] 
-
 ---
 * To build and run the docker file by using following commands
 ---
@@ -377,13 +375,9 @@ CMD ["dotnet","Nop.Web.dll"]
 * ![Preview](./workshop49.png)
 * ![Preview](./workshop50.png)
 
-
-
-
-
-
-
-
+## student courses register
+* Dockerfile
+---
 FROM python:3.7-alpine
 LABEL author=KHAJA
 LABEL blog=directdevops.blog
@@ -398,3 +392,51 @@ EXPOSE 8080
 WORKDIR $HOME_DIR
 RUN pip install -r requirements.txt
 ENTRYPOINT ["python", "app.py"]
+---
+* To build and run the docker file by using following commands
+---
+* git clone https://github.com/DevProjectsForDevOps/StudentCoursesRestAPI.git
+* cd StudentCoursesRestAPI
+* docker image build -t studentcourserestservice:1.0 .
+* docker container run -d --name mysql -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=test -e MYSQL_USER=directdevops -e MYSQL_PASSWORD=directdevops mysql:5.6
+* docker inspect mysql | grep IPAddress
+* docker container run -d --name mypythonapp -e MYSQL_SERVER=172.17.0.2 -p 8080:8080 studentcourserestservice:1.0
+---
+![Preview](./workshop51.png)
+![Preview](./workshop52.png)
+![Preview](./workshop53.png)
+![Preview](./workshop54.png)
+![Preview](./workshop55.png)
+
+
+---
+FROM alpine:3.17 as source
+LABEL author="Manohar" project="StudentCoursesRestAPI"
+RUN apk add --update && apk add git
+RUN git clone https://github.com/manohargatla/StudentCoursesRestAPI.git /StudentCoursesRestAPI
+
+
+FROM python:3.7-alpine
+LABEL author="Manohar" project="StudentCoursesRestAPI"
+COPY --from=source /StudentCoursesRestAPI /StudentCoursesRestAPI
+WORKDIR /StudentCoursesRestAPI 
+RUN pip install --upgrade pip 
+RUN pip install -r requirements.txt
+EXPOSE 8080
+ENTRYPOINT ["python","app.py"]
+---
+---
+docker image build -t scr:1.0 .
+docker container run -d -P scr:1.0
+---
+![Preview](./workshop56.png)
+
+
+
+
+
+
+
+
+
+
