@@ -430,13 +430,3 @@ docker image build -t scr:1.0 .
 docker container run -d -P scr:1.0
 ---
 ![Preview](./workshop56.png)
-
-
-
-
-
-
-
-
-
-
