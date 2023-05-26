@@ -47,7 +47,56 @@
 * Kubernetes provides you with the following 
     * Service discovery and load balancing
     * Storage orchestration
-    * Automated rollouts and rollbacks
+    * Automated rollouts and rollbacks (version changes)
     * Automatic bin packing
-    * Self-Healing
+    * Self-Healing (automatic restart)
     * Secret and configuration management
+# Kubernetes Architectural Components
+* When you deploy Kubernetes, you get a cluster.
+* A Kubernetes cluster consists of a set of worker nods, called compute machines/nodes, that run containerized applications. The node(s) host the Pods that are the components of the application workload.
+* The control plane manages the worker nodes and the Pods in the cluster.
+![preview](./k8s3.png)
+* Cluster ===> Nodes ===> Pods ===> Containers ===> Image
+* The cluster is in above order.
+
+# Control plane components
+* API Server: The API server is the front end for the Kubernetes control plane.
+
+* Scheduler: It is responsible for scheduling pods on specific nodes according to automated workflows and user defined conditions.
+
+* Controller Manager: The controller manager is responsible for several controllers that handle various automated activities at the cluster or pod level, including replication controller, namespace controller, service accounts controller, deployment, statefulset, and daemonset.
+
+* ETCD: Consistent and highly-available key value store used as Kubernetes’ backing store for all cluster data.
+
+* Node components: run on every node, maintaining running pods and providing the Kubernetes runtime environment.
+
+* kubelet: An agent that runs on each node in the cluster. It makes sure that containers are running in a Pod.
+
+* kube-Proxy: It maintains network rules on nodes. These network rules allow network communication to your Pods from network sessions inside or outside of your cluster.
+
+* Container Runtime: The container runtime is the software that is responsible for running containers.
+
+# What are the benefits of Kubernetes?
+* Container orchestration savings
+    * Orchestration is the automated configuration, management, and coordination of computer systems, applications, and services.
+* Increased DevOps efficiency for microservices architecture
+* Deploying workloads in multicloud environments
+* More portability with less chance of vendor lock-in
+* Automation of deployment and scalability
+* App stability and availability in a cloud environment
+* Open-source benefits of Kubernetes
+
+# How do you use Kubernetes
+* Various vendors offer Kubernetes-based platforms (Managed Kubernetes Platform) or infrastructure as a service (IaaS) that deploy Kubernetes.
+
+* Alibaba Cloud ACK (Alibaba Cloud Container Service for Kubernetes)
+* Amazon EKS (Elastic Kubernetes Service)
+* DigitalOcean managed Kubernetes Service
+* Google GKE (Google Kubernetes Engine)
+* IBM Cloud Kubernetes Services
+* Microsoft AKS (Azure Kubernetes Services)
+* Mirantis K0s
+* Oracle Container Engine for Kubernetes
+* Red Hat Openshift
+* SUSE Rancher, Rancher Kubernetes Engine (RKE)
+* VMware Tanzu
