@@ -86,9 +86,8 @@
 * App stability and availability in a cloud environment
 * Open-source benefits of Kubernetes
 
-# How do you use Kubernetes
+# Kubernetes services
 * Various vendors offer Kubernetes-based platforms (Managed Kubernetes Platform) or infrastructure as a service (IaaS) that deploy Kubernetes.
-
 * Alibaba Cloud ACK (Alibaba Cloud Container Service for Kubernetes)
 * Amazon EKS (Elastic Kubernetes Service)
 * DigitalOcean managed Kubernetes Service
@@ -100,3 +99,12 @@
 * Red Hat Openshift
 * SUSE Rancher, Rancher Kubernetes Engine (RKE)
 * VMware Tanzu
+
+# What is k8s manifest
+* This is a yaml file which describes the desired state of what you want in/using k8s cluster.
+
+# CI/CD workflow
+* step1: write a new code
+* step2: build docker image with new tag
+* step3: push the image to registry
+* step4: deploy this in k8s cluster (environment)
