@@ -108,3 +108,5 @@
 * step2: build docker image with new tag
 * step3: push the image to registry
 * step4: deploy this in k8s cluster (environment)
+* In which environment we use the pipeline will be changed by their environmently.
+## K8s Installations
