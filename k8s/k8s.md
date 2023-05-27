@@ -6,14 +6,14 @@
 * Containers don’t scale on their own.
 * Scaling is of two types
     1. Vertical Scaling
-        * Increase the size of the container
+        * Increase the size of the pod.
     2. Horizontal Scaling
-        * Increase the no. of containers
+        * Increase the no. of pods.
 # TERMS
 
 1. Distributed System
     * Master node will be distribute the work to worker nodes this system is called distributed system.
-2. Node
+## 2. Node
     * Each of the server (VM) is called node.
 3. Cluster
     * The combination of master node and worker node is called cluster.
@@ -110,3 +110,4 @@
 * step4: deploy this in k8s cluster (environment)
 * In which environment we use the pipeline will be changed by their environmently.
 ## K8s Installations
+* Create two are more VM's with size 2vcpu's and 8Gb memory
