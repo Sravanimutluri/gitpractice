@@ -182,6 +182,11 @@
 * kubectl get nodes
 * kubectl get nodes -w
 ---
+![preview](./k8s13.png)
+![preview](./k8s14.png)
+* The resources exposed by api-server
+![preview](./k8s15.png)
+* [referhere] (https://directdevops.blog/2023/04/23/devops-classroomnotes-23-apr-2023-2/)
 # How to Create Resources in K8s
 We would be creating k8s manifests i.e yaml files
 For this we need to understand
@@ -189,10 +194,69 @@ yaml
 api versioning
 Spec and Status
 # K8s Workloads
-## pod:
-    * 
-* Replica set
-* Deploymet
+* Pod
+* Replicaset   
+* Deployment
 * Statefulsets
 * Jobs
 * Cornjobs
+## pod:
+    * The smallest unit of creation is called pod. Pods has a container. every pod gets an IP address.
+* [referhere] (https://www.vmware.com/topics/glossary/content/kubernetes-pods.html#:~:text=A%20pod%20is%20the%20smallest,that%20pod%20to%20continue%20operations.)
+* [Referhere] (https://kubernetes.io/docs/concepts/workloads/pods/#:~:text=Pods%20are%20the%20smallest%20deployable,how%20to%20run%20the%20containers) for the official docs
+## Replica set:
+    * A ReplicaSet's purpose is to maintain a stable set of replica Pods running at any given time. As such, it is often used to guarantee the availability of a specified number of identical Pods.
+## Deployment:
+    * A Kubernetes Deployment tells Kubernetes how to create or modify instances of the pods that hold a containerized application. Deployments can help to efficiently scale the number of replica pods, enable the rollout of updated code in a controlled manner, or roll back to an earlier deployment version if necessary.
+* [referhere] (https://www.vmware.com/topics/glossary/content/kubernetes-deployment.html#:~:text=A%20Kubernetes%20Deployment%20tells%20Kubernetes,earlier%20deployment%20version%20if%20necessary) for docs
+## Statefulsets:
+    * StatefulSet is the workload API object used to manage stateful applications. Manages the deployment and scaling of a set of Pods, and provides guarantees about the ordering and uniqueness of these Pods. Like a Deployment, a StatefulSet manages Pods that are based on an identical container spec.
+* [referhere] (https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#:~:text=StatefulSet%20is%20the%20workload%20API,on%20an%20identical%20container%20spec.)
+## Jobs:
+    * A Job creates one or more Pods and will continue to retry execution of the Pods until a specified number of them successfully terminate. As pods successfully complete, the Job tracks the successful completions. When a specified number of successful completions is reached, the task (ie, Job) is complete.
+## Cornjobs:
+    * A CronJob creates Jobs on a repeating schedule. CronJob is meant for performing regular scheduled actions such as backups, report generation, and so on. One CronJob object is like one line of a crontab (cron table) file on a Unix system. It runs a job periodically on a given schedule, written in Cron format.
+## API Versioning
+* APIs are grouped as apigroups:
+    * core
+    * batch
+    * networking.k8s.io
+* Api version: This is written as <groupname>/<Version>, if the group name is core <version>
+* In this groups we have kind of api-resources.
+## Defining Resources in a manifest file
+* To define a resource in a manifest file we create a yaml file with following structure
+    * apiVersion: 
+    * kind:
+    * metadata:
+    * spec:
+## Pod lifecycle
+* K8s Pods will have following states
+    * Pending
+    * Running
+    * Succeded
+    * Failed
+    * Unknown
+## Container States in k8s pod
+### Waiting:
+    * If a container is not in either the Running or Terminated state, it is Waiting. A container in the Waiting state is still running the operations it requires in order to complete start up: for example, pulling the container image from a container image registry, or applying Secret data. When you use kubectl to query a Pod with a container that is Waiting, you also see a Reason field to summarize why the container is in that state.
+### Running:
+    * The Running status indicates that a container is executing without issues. If there was a postStart hook configured, it has already executed and finished. When you use kubectl to query a Pod with a container that is Running, you also see information about when the container entered the Running state.
+### Terminated: 
+    * A container in the Terminated state began execution and then either ran to completion or failed for some reason. When you use kubectl to query a Pod with a container that is Terminated, you see a reason, an exit code, and the start and finish time for that container's period of execution.
+    * If a container has a preStop hook configured, this hook runs before the container enters the Terminated state.
+## Pod conditions
+* A Pod has a PodStatus, which has an array of PodConditions through which the Pod has or has not passed. Kubelet manages the following PodConditions:
+    * PodScheduled: the Pod has been scheduled to a node.
+    * PodHasNetwork: (alpha feature; must be enabled explicitly) the Pod sandbox has been successfully created and networking configured.
+    * ContainersReady: all containers in the Pod are ready.
+    * Initialized: all init containers have completed successfully.
+    * Ready: the Pod is able to serve requests and should be added to the load balancing pools of all matching Services.
+# Controllers in K8s
+* Controllers are k8s objects which run other k8s resources. This k8s resource will be part of specification generally in template section.
+* Controllers maintain desired state. Some of the controllers are
+    * Replication Controller/Replica Set
+    * Stateful Sets
+    * Deployments
+    * Jobs
+    * Cron Jobs
+    * Daemonset
