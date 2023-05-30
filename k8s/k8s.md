@@ -260,3 +260,6 @@ Spec and Status
     * Jobs
     * Cron Jobs
     * Daemonset
+## K8s has two types of jobs
+* Job: Run an activity/script to completion
+* CronJob: Run an activity/script to completion at specific time period or intervals.
