@@ -260,14 +260,10 @@ Spec and Status
     * Jobs
     * Cron Jobs
     * Daemonset
+![preview](./k8s16.png)
 ## K8s has two types of jobs
 * Job: Run an activity/script to completion
 * CronJob: Run an activity/script to completion at specific time period or intervals.
-
-
-
-
-
 ## Metadata
 * Every object kind MUST have the following metadata in a nested object field called "metadata".
 ### namespace:
@@ -299,4 +295,50 @@ Labels are intended for organizational purposes by end users (select the pods th
             * 3. *-date
             * 4. *-month
             * 5. *-day
-            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### 1. What is Kubernetes?
+* Kubernetes is an open-source container orchestration tool or system that is used to automate tasks such as the management, monitoring, scaling, and deployment of containerized applications.
+### 2. What process runs on Kubernetes Master Node? 
+The Kube-api server process runs on the master node and serves to scale the deployment of more instances.
+
