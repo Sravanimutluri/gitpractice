@@ -4,7 +4,7 @@ kind: CronJob
 metadata: 
   name: periodicjob
 spec:
-  schedule: "* * * * *"
+  schedule: '* * * * *'
   jobTemplate:
     metadata:
       name: getlivedata 
