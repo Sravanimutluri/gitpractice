@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: game-of-life
+spc:
+  name: gameoflife
+  image: gol
+  ports:
+    - containerport: 5000

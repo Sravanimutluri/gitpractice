@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nopCommerce 
+spc:
+  name: nop
+  image: nopCommerce
+  ports:
+    - containerport: 5000
