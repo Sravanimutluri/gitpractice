@@ -40,8 +40,19 @@
 ![preview](./k8s7.png)
 ![preview](./k8s8.png)
 ## Write a Pod Spec for Spring PetClinic and nopCommerce Applications?
-
-
+* yaml file for Spring PetClinic
+---
+        apiVersion: v1
+        kind: Pod
+        metadata:
+        name: Spring-petclinic 
+        spc:
+        name: Sping-petclinic
+        image: Sping-petclinic
+        ports:
+            - containerport: 8080
+---
+* to excute the above do
 
 
 
