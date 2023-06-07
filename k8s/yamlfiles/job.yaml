@@ -3,12 +3,12 @@ apiVersion: batch/v1
 kind: Job
 metadata: 
   name: hellojob
-spc:
+spec:
   backoffLimit: 5
   template:
     metadata:
       name: jobpod
-    spc:
+    spec:
       restartPolicy: OnFailure
       containers:
         - name: alpine

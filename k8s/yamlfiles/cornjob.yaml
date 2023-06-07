@@ -3,17 +3,17 @@ apiVersion: batch/v1
 kind: CronJob
 metadata: 
   name: periodicjob
-spc:
+spec:
   schedule: "* * * * *"
   jobTemplate:
     metadata:
       name: getlivedata 
-  spc: 
-    backofflimit: 2
+  spec: 
+    backoffLimit: 2
     template:
       metadata:
         name: livedatapod
-      spc:
+      spec:
         restartPolicy: OnFailure
         containers:
           - name: alpine
