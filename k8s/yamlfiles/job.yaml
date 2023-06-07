@@ -4,7 +4,7 @@ kind: Job
 metadata: 
   name: hellojob
 spc:
-  backofflimit: 5
+  backoffLimit: 5
   template:
     metadata:
       name: jobpod
