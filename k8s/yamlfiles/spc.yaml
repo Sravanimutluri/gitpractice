@@ -4,7 +4,7 @@ kind: Pod
 metadata:
   name: Spring-petclinic 
 spec:
-  name: Sping-petclinic
-  image: Sping-petclinic
-  ports:
-    - containerport: 8080
+  - name: Sping-petclinic
+    image: Sping-petclinic
+    ports:
+      - containerport: 8080
