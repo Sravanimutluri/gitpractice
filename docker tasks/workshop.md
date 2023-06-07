@@ -1,5 +1,5 @@
-#### DAY1
-# Run hello-world docker container and observe the container status
+# DAY1
+## Run hello-world docker container and observe the container status
 * Create a container by using following commands
 ---
   * docker container hello-world
@@ -53,7 +53,7 @@
 * Docker architecture. Docker uses a client-server architecture. The Docker client talks to the Docker daemon, which does the heavy lifting of building, running, and distributing your Docker containers. The Docker client and daemon can run on the same system, or you can connect a Docker client to a remote Docker daemon.
 ![preview](./workshop8.png)
 
-#### DAY2
+# DAY2
 ### Write a Docker file for NodeJS application – expressjs
 * Dockerfile
 ---
