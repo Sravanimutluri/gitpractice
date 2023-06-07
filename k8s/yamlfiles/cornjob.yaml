@@ -8,16 +8,16 @@ spec:
   jobTemplate:
     metadata:
       name: getlivedata 
-  spec: 
-    backoffLimit: 2
-    template:
-      metadata:
-        name: livedatapod
-      spec:
-        restartPolicy: OnFailure
-        containers:
-          - name: alpine
-            image: alpine
-            command:
-              - sleep
-              - 10s
+    spec: 
+      backoffLimit: 2
+      template:
+        metadata:
+          name: livedatapod
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: alpine
+              image: alpine
+              command:
+                - sleep
+                - 10s
