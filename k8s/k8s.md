@@ -299,7 +299,20 @@ Labels are intended for organizational purposes by end users (select the pods th
 * to create a replicaset controller and excute that
 * for replicaset watch activity1.yaml file
 ![preview](./k8s17.png)
-* now add the labels at metadata
+* now add the labels at metadata and run it.
+---
+* kubectl apply -f activity1.yaml
+* kubectl get replicaset.apps
+* kubectl get po
+---
+![preview](./k8s18.png)
+* To change the replica count 
+---
+* kubectl scale --replicas=<any number we want> rs/nginx-rs
+* kubectl get po
+---
+
+
 
 
 
