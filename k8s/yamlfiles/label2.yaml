@@ -21,8 +21,8 @@ spec:
         values:
           - pro
           - cat
-      - key: failing
-        operator: DoesNotExist
+      - key: success
+        operator: Exists
         values: 
   template:
     metadata:
