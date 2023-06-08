@@ -320,8 +320,38 @@ Labels are intended for organizational purposes by end users (select the pods th
 * Labels can be selected using
     #### Equality based:
         * Equality based selectors allow filtering by label keys and values. Matching objects must satisfy all of the specified label constraints, though they may have additional labels as well.
+        * ex: label1.yaml
     #### set based:
         * Set-based selectors allow filtering of keys according to a set of values.
+        * ex: label2.yaml and label3.yaml
+## Kubernetes as a Service (Managed K8s)
+* Every Cloud provider offers k8s as a service
+    * Azure = AKS
+    * AWS = EKS
+    * GCP = GKE
+* K8s as a service basically means the master nodes will be managed by cloud provider.
+    * Typical k8s cluster
+    * K8s as a Service
+### Advantages:
+* less administration
+* nodes can be scaled
+* inbuilt support for cloud integrations
+### Installation
+* Install kubectl in local terminal by using choco package manager.
+* Install azure cli in local terminal by using following commands
+---
+* winget install -e --id Microsoft.AzureCLI
+* az login
+---
+* connect to terminal by using these commands
+---
+* az account set --subscription 1227324d-633b-4b92-bfd2-e097d385351a
+* az aks get-credentials --resource-group sravani --name srinivas
+---
+
+
+
+
 
 
 
@@ -372,4 +402,6 @@ Labels are intended for organizational purposes by end users (select the pods th
 * Kubernetes is an open-source container orchestration tool or system that is used to automate tasks such as the management, monitoring, scaling, and deployment of containerized applications.
 ### 2. What process runs on Kubernetes Master Node? 
 The Kube-api server process runs on the master node and serves to scale the deployment of more instances.
+### 3. What is culterip?
+* Each service gets a ip address and this is virtual ip which helps in forwarding traffic to one of the pod based on labels. This ip is called as cluster ip.
 
