@@ -22,9 +22,8 @@ spec:
           - pro
           - cat
       - key: failing
-        operator: Exists
-        values:
-          - dev 
+        operator: DoesNotExist
+        values: 
   template:
     metadata:
       name: nginx-pod
