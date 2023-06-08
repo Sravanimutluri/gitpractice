@@ -311,6 +311,19 @@ Labels are intended for organizational purposes by end users (select the pods th
 * kubectl scale --replicas=<any number we want> rs/nginx-rs
 * kubectl get po
 ---
+![preview](./k8s19.png)
+* Another example for replicaset
+![preview](./k8s20.png)
+## Labels
+* Labels are key value pairs that can be attached as metadata to k8s objects.
+* Labels help in selecting/querying/filtering objects
+* Labels can be selected using
+    #### Equality based:
+        * Equality based selectors allow filtering by label keys and values. Matching objects must satisfy all of the specified label constraints, though they may have additional labels as well.
+    #### set based:
+        * Set-based selectors allow filtering of keys according to a set of values.
+
+
 
 
 
