@@ -1,0 +1,29 @@
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: httpd-rs
+  labels:
+   purpose: understanding
+   concept: setbased
+   env: production
+spec:
+  minReadySeconds: 3
+  replicas: 7
+  selector:
+    matchExpressions:
+      - key: successing
+        operator: Exists
+        values: 
+  template:
+    metadata:
+      name: httpd-pod
+      labels:
+        app: httpd
+        env: dev
+    spec:
+      containers:
+        - name: sravani
+          image: httpd
+          ports:
+            - containerPort: 8080
