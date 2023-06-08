@@ -12,11 +12,11 @@ spec:
   replicas: 7
   selector:
     matchExpressions:
-      - key: app
-        operator: In
-        values:
-          - nginx
-          - dev
+      # - key: app
+      #   operator: In
+      #   values:
+      #     - nginx
+      #     - dev
       # - key: env
       #   operator: NotIn
       #   values:
