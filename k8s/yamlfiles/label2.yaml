@@ -25,7 +25,6 @@ spec:
       - key: success
         operator: Exists
         values:
-          - dev 
   template:
     metadata:
       name: nginx-pod
