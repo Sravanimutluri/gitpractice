@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: setbased
+  labels:
+   app: nginx
+   purpose: understanding
+   concept: setbased
+   env: production
+spec:
+  minReadySeconds: 3
+  replicas: 7
+  selector:
+    matchExpressions:
+      - key: app
+        operator: In
+        values:
+          - nginx
+          - web
+      - key: env
+        operator: NotIn
+        values:
+          - pro
+          - cat
+      - key: failing
+        operator: Exists
+        values: 
+      - key: success
+        operator: DoesNotExist
+    matchLabels:
+      labels:
+        app: nginx
+  template:
+    metadata: 
+      name: nginx-pod
+    spec:
+      containers:
+        - name: sravani
+          image: nginx
+          ports:
+            - containerPort: 80
