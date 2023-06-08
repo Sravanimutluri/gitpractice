@@ -16,7 +16,6 @@ spec:
         operator: In
         values:
           - nginx
-          - web
       - key: env
         operator: NotIn
         values:
@@ -24,10 +23,14 @@ spec:
           - cat
       - key: failing
         operator: Exists
-        values: 
-    template:
-    metadata: 
+        values:
+          - dev 
+  template:
+    metadata:
       name: nginx-pod
+      labels:
+        app: nginx
+        env: dev
     spec:
       containers:
         - name: sravani
