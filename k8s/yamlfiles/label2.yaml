@@ -22,7 +22,7 @@ spec:
         values:
           - pro
           - cat
-      - key: success
+      - key: successing
         operator: Exists
         values:
   template:
