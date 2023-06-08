@@ -13,7 +13,7 @@ spec:
   selector:
     matchExpressions:
       - key: successing
-        operator: Exists
+        operator: DoesNotExist
         values: 
   template:
     metadata:
