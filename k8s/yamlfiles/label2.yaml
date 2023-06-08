@@ -16,6 +16,7 @@ spec:
         operator: In
         values:
           - nginx
+          - dev
       - key: env
         operator: NotIn
         values:
@@ -23,7 +24,8 @@ spec:
           - cat
       - key: success
         operator: Exists
-        values: 
+        values:
+          - dev 
   template:
     metadata:
       name: nginx-pod
