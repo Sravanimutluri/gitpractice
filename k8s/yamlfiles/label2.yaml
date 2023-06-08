@@ -28,8 +28,6 @@ spec:
     template:
     metadata: 
       name: nginx-pod
-      labels:
-        app: nginx
     spec:
       containers:
         - name: sravani
