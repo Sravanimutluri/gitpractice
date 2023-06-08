@@ -25,9 +25,6 @@ spec:
       - key: failing
         operator: Exists
         values: 
-      - key: success
-        operator: DoesNotExist
-        values: 
     matchLabels:
       labels:
         app: nginx
