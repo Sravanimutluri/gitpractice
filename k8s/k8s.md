@@ -295,6 +295,11 @@ Labels are intended for organizational purposes by end users (select the pods th
             * 3. *-date
             * 4. *-month
             * 5. *-day
+### ReplicaSet
+* to create a replicaset controller and excute that
+* for replicaset watch activity1.yaml file
+![preview](./k8s17.png)
+* now add the labels at metadata
 
 
 
