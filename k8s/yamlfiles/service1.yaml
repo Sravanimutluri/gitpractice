@@ -8,7 +8,7 @@ spec:
     app: nginx
   type: ClusterIP
   ports:
-    - name: nginx
-      nodePort: 80
+    - name: nginx-svc
+      Port: 80
       targetPort: 80
       protocol: TCP
