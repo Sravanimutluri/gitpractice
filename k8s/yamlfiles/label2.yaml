@@ -25,10 +25,7 @@ spec:
       - key: failing
         operator: Exists
         values: 
-    matchLabels:
-      labels:
-        app: nginx
-  template:
+    template:
     metadata: 
       name: nginx-pod
       labels:
