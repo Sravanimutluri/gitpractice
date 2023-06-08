@@ -4,7 +4,6 @@ kind: ReplicaSet
 metadata:
   name: nginx-rs
   labels:
-   app: nginx
    purpose: understanding
    concept: setbased
    env: production
