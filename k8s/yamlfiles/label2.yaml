@@ -17,11 +17,11 @@ spec:
         values:
           - nginx
           - dev
-      - key: env
-        operator: NotIn
-        values:
-          - pro
-          - cat
+      # - key: env
+      #   operator: NotIn
+      #   values:
+      #     - pro
+      #     - cat
       - key: successing
         operator: Exists
         values:
