@@ -4,7 +4,8 @@ kind: Pod
 metadata:
   name: game-of-life
 spec:
-  name: gameoflife
-  image: gol
-  ports:
-    - containerport: 5000
+  containers:
+    - name: gameoflife
+      image: gol
+      ports:
+        - containerport: 5000

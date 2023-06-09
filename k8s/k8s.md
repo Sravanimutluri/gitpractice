@@ -348,6 +348,120 @@ Labels are intended for organizational purposes by end users (select the pods th
 * az account set --subscription 1227324d-633b-4b92-bfd2-e097d385351a
 * az aks get-credentials --resource-group sravani --name srinivas
 ---
+### Health Checks/Probes for containers in k8s Pods
+* K8s supports 3 kinds of checks
+    ##### liveness probe:
+        * if this check fails kuberenetes will restart the container.
+    ##### readiness probe:
+        * if this check fails the pod will be removed from service (pod will not get requests from service)
+    ##### startup probe:
+        * This checks for startup and until startup is ok, the other checks will be paused.
+* Probes or checks can be performed by the following
+    ##### exec:
+        * run any linux/windows command which returns status/exit code.
+    ##### http:
+        * we send http request to the application. based on status codes we can decide
+    ##### grpc:
+        * This communicates over grpc
+    ##### tcp:
+        * send tcp request
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -4,7 +4,8 @@ kind: Pod
 metadata:
   name: nopCommerce 
 spec:
-  name: nop
-  image: nopCommerce
-  ports:
-    - containerport: 5000
+  containers:
+    - name: nop
+      image: nopCommerce
+      ports:
+        - containerport: 5000
