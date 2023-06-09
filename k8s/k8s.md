@@ -348,6 +348,19 @@ Labels are intended for organizational purposes by end users (select the pods th
 * az account set --subscription 1227324d-633b-4b92-bfd2-e097d385351a
 * az aks get-credentials --resource-group sravani --name srinivas
 ---
+* Kubernetes has the service publishing types
+#### ClusterIP: 
+    * Exposes the Service on a cluster-internal IP. Choosing this value makes the Service only reachable from within the cluster. This is the default that is used if you don't explicitly specify a type for a Service. You can expose the Service to the public internet using an Ingress or a Gateway. internal communication
+#### NodePort:
+Exposes the Service on each Node's IP at a static port (the NodePort). To make the node port available, Kubernetes sets up a cluster IP address, the same as if you had requested a Service of type: ClusterIP.
+LoadBalancer
+Exposes the Service externally using an external load balancer. Kubernetes does not directly offer a load balancing component; you must provide one, or you can integrate your Kubernetes cluster with a cloud provider.
+ExternalName
+Maps the Service to the contents of the externalName field (for example, to the hostname api.foo.bar.example). The mapping configures your cluster's DNS server to return a CNAME record with that external hostname value. No proxying of any kind is set up.
+* Cluster ip: internal communication
+* Node Port: k8s will expose the application on a port on every node in k8s cluster.
+* 
+
 ### Health Checks/Probes for containers in k8s Pods
 * K8s supports 3 kinds of checks
     ##### liveness probe:
@@ -510,12 +523,11 @@ Labels are intended for organizational purposes by end users (select the pods th
 
 
 
-
-
 ### 1. What is Kubernetes?
 * Kubernetes is an open-source container orchestration tool or system that is used to automate tasks such as the management, monitoring, scaling, and deployment of containerized applications.
 ### 2. What process runs on Kubernetes Master Node? 
 The Kube-api server process runs on the master node and serves to scale the deployment of more instances.
 ### 3. What is culterip?
 * Each service gets a ip address and this is virtual ip which helps in forwarding traffic to one of the pod based on labels. This ip is called as cluster ip.
-
+### 4. What are CRDs in k8s?
+* Custom resources definition (CRD) is a powerful feature introduced in Kubernetes 1.7 which enables users to add their own/custom objects to the Kubernetes cluster and use it like any other native Kubernetes objects.

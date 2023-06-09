@@ -48,6 +48,6 @@ spec:
             exec: 
               command: 
                 - sleep
-                - 10 s
+                - 10s
             grpc: 
               port: 80
