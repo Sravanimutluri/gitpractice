@@ -19,7 +19,7 @@ spec:
 apiVersion: v1
 kind: ReplicaSet
 metadata:
-  name: httpd
+  name: httpd-rs
   labels:
     app: httpd
 spec:
