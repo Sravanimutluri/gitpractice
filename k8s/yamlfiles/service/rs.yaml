@@ -1,0 +1,43 @@
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: httpd-rs
+  labels:
+    app: httpd
+spec:
+  minReadySeconds: 3
+  replicas: 5
+  selector:
+    matchLabels:
+      app: httpd
+  template:
+    metadata:
+      name: httpd
+      labels:
+        app: httpd
+    spec:
+      containers:
+        - name: httpd
+          image: httpd
+          ports:
+            - containerPort: 80
+          livenessProbe:
+            failureThreshold: 1
+            initialDelaySeconds: 2
+            periodSeconds: 1
+            successThreshold: 1
+            terminationGracePeriodSeconds: 1
+            timeoutSeconds: 5
+            httpGet: 
+              path: /
+              port: 80
+          readinessProbe: 
+            failureThreshold: 1
+            initialDelaySeconds: 2
+            periodSeconds: 1
+            successThreshold: 1
+            timeoutSeconds: 5
+            httpGet:
+              path: /
+              port: 80

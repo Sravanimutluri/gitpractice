@@ -378,6 +378,40 @@ Maps the Service to the contents of the externalName field (for example, to the 
         * This communicates over grpc
     ##### tcp:
         * send tcp request
+### Container Types in Pods
+* We have 3 types of containers
+    * containers: these are why we write pod spec
+    * init containers: Init containers are just like regular containers, but they run to completion and run before the main container starts.
+    * ephemeral containers: a special type of container that runs temporarily in an existing Pod to accomplish user-initiated actions such as troubleshooting.
+### Node Usecases
+* How to schedule a Pod on a Particular node
+* How to stop assigning more pods to a node
+* How to move all the pods running a node to other ndoe
+## Deployment:
+* Deployment is a k8s object which can help in rolling out and rolling in updates
+* Deployment controls replica set and replica set controls pods
+
+
+
+
+
+
+
+
+### commands
+* to create < kubectl apply -f <filename> >
+* to check pods < kubectl get po >
+* to delete < kubectl delete -f <filename> >
+* for pwd < kubectl exec <pod name> -- pwd >
+* for ls < kubectl exec <pod name> -- ls >
+* to enter in side pod < kubectl exec <pod name> -it -- /bin/bash(sh) >
+* To port forward < kubectl port-forward --address "<ipaddress>" <pod name> <hostport>:<pod port> >
+* to describe < kubectl describe rs >
+* to check labels < kubectl get po --show-labels >
+* to check services < kubectl get svc -o wide >
+* to print < kubectl exec <pod name> --printenv >
+
+
 
 
 
@@ -531,3 +565,11 @@ The Kube-api server process runs on the master node and serves to scale the depl
 * Each service gets a ip address and this is virtual ip which helps in forwarding traffic to one of the pod based on labels. This ip is called as cluster ip.
 ### 4. What are CRDs in k8s?
 * Custom resources definition (CRD) is a powerful feature introduced in Kubernetes 1.7 which enables users to add their own/custom objects to the Kubernetes cluster and use it like any other native Kubernetes objects.
+### 5. What is an init container?
+* An init container is a type of container that has a few modified operational behavior and rules. One of the most dominant features is that init containers are started and terminated before application containers, and they must run to completion with success. They specifically exist for initializing the workload environment.
+### 6. What is an ephemeral container?
+* Ephemeral containers differ from other containers in that they lack guarantees for resources or execution, and they will never be automatically restarted, so they are not appropriate for building applications. 
+### 7. Why we are use Node?
+* How to schedule a Pod on a Particular node
+* How to stop assigning more pods to a node
+* How to move all the pods running a node to other ndoe

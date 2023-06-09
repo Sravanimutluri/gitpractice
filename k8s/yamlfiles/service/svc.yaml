@@ -1,0 +1,17 @@
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: httpd-svc
+  labels:
+    app: httpd
+    purpose: understanding
+spec:
+  ports:
+    - name: httpd
+      port: 80
+      targetPort: 80
+      protocol: TCP
+  selector:
+    app: httpd
+  type: LoadBalancer

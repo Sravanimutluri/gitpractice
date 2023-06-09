@@ -1,0 +1,36 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: nginx-dep
+  labels:
+    app: nginx
+    env: dev
+spec:
+  minReadySeconds: 3
+  paused: false
+  progressDeadlineSeconds: 600
+  replicas: 4
+  revisionHistoryLimit: 10
+  selector: 
+    matchLabels: 
+      labels: 
+        app: nginx
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: 
+      maxSurge: 10%
+      maxUnavailable: 10%
+  template:
+    metadata:
+      name: nginx-dep
+    labels:
+      app: nginx
+      env: dev
+    spec: 
+      containers: 
+        - name: nginx
+          image: nginx
+          ports: 
+            - containerPort: 80
+              protocol: TCP

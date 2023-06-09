@@ -1,0 +1,78 @@
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: nginx-svc
+  labels:
+    app: nginx
+    env: dev
+    concept: resource
+spec:
+  ports: 
+    - name: nginx
+      port: 80
+      targetPort: 80
+      protocol: TCP 
+  selector: 
+    app: nginx
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata: 
+  name: nginx-svc
+  labels:
+    app: nginx
+    env: dev
+    concept: resource
+spec: 
+  minReadySeconds: 4
+  replicas: 9
+  selector:
+    matchLabels: 
+      labels:
+        app: nginx
+  template:
+    metadata:
+      name: nginx
+    spec: 
+      containers: 
+        - name: nginx
+          image: nginx
+          imagePullPolicy: Always
+          tty: false
+          ports: 
+            - containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            failureThreshold: 1
+            initialDelaySeconds: 1
+            periodSeconds: 1
+            successThreshold: 1
+            terminationGracePeriodSeconds: 1
+            timeoutSeconds: 10
+            httpGet: 
+              host: Host
+              path: /
+              port: 80
+              scheme: HTTP
+          readinessProbe: 
+            failureThreshold: 1
+            initialDelaySeconds: 1
+            periodSeconds: 1
+            successThreshold: 1
+            timeoutSeconds: 10
+            httpGet: 
+              host: Host
+              path: /
+              port: 80
+              scheme: HTTP
+          resources: 
+            claims: 
+              - name: nginx
+            requests: 
+              memory: "350Mi"
+              cpu: "850m"
+            limits: 
+              memory: "250Mi"
+              cpu: "500m"
