@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata: 
+  name: nginx-rs
+  labels: 
+    apps: nginx
+spec: 
+  minReadySeconds: 2
+  replicas: 2
+  selector: 
+    matchLabels: 
+      apps: nginx
+  template: 
+    metadata: 
+      name: nginx
+      labels:
+       apps: nginx
+    spec: 
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+            - name: nginx
+              containerPort: 80
+              protocol: TCP
+      initContainers: 
+        - name: alpine
+          image: alpine
+          imagePullPolicy: Always
+          command:
+            - sleep
+            - 15s
+        - name: init-myservice
+          image: busybox:1.28
+          command: 
+            - 'sh' 
+            - '-c' 
+            - "until nslookup nginx-svc.default.svc.cluster.local; do echo waiting for myservice; sleep 2; done"

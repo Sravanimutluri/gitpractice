@@ -378,11 +378,17 @@ Maps the Service to the contents of the externalName field (for example, to the 
         * This communicates over grpc
     ##### tcp:
         * send tcp request
+* Run Pods with specific Resources (CPU/Memory)
+* [referhere] (C:\Users\DELL\OneDrive\Desktop\gitclassroom\gitpractice\k8s\yamlfiles\sevice5.yaml) for manifestfile
+![preview](./k8s23.png)
 ### Container Types in Pods
 * We have 3 types of containers
-    * containers: these are why we write pod spec
-    * init containers: Init containers are just like regular containers, but they run to completion and run before the main container starts.
-    * ephemeral containers: a special type of container that runs temporarily in an existing Pod to accomplish user-initiated actions such as troubleshooting.
+    ##### containers:
+        * These are why we write pod spec
+    ##### init containers:
+        * Init containers are just like regular containers, but they run to completion and run before the main container starts.
+    ##### ephemeral containers:
+        * A special type of container that runs temporarily in an existing Pod to accomplish user-initiated actions such as troubleshooting.
 ### Node Usecases
 * How to schedule a Pod on a Particular node
 * How to stop assigning more pods to a node
@@ -390,6 +396,10 @@ Maps the Service to the contents of the externalName field (for example, to the 
 ## Deployment:
 * Deployment is a k8s object which can help in rolling out and rolling in updates
 * Deployment controls replica set and replica set controls pods
+* [referhere](C:\Users\DELL\OneDrive\Desktop\gitclassroom\gitpractice\k8s\yamlfiles\deploy\deploy1.yaml) for manifest file
+![preview](./k8s24.png)
+![preview](./k8s25.png)
+
 
 
 

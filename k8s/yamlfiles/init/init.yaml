@@ -1,0 +1,54 @@
+---
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: init-demo
+  labels:
+    app: httpd
+spec:
+  containers: 
+    - name: httpd
+      image: httpd
+      args:
+        - sleep
+        - 10s
+      imagePullPolicy: Always
+      livenessProbe: 
+        failureThreshold: 1
+        initialDelaySeconds: 1
+        periodSeconds: 1
+        successThreshold: 1
+        terminationGracePeriodSeconds: 1
+        timeoutSeconds: 1
+        httpGet: 
+          path: /
+          port: 80
+      readinessProbe:
+        failureThreshold: 1
+        initialDelaySeconds: 1
+        periodSeconds: 1
+        successThreshold: 1
+        timeoutSeconds: 1
+        httpGet: 
+          path: /
+          port: 80 
+      ports:
+        - containerPort: 80
+          protocol: TCP
+  initContainers:
+    - name: init
+      image: httpd
+      imagePullPolicy: Always
+      ports: 
+        - containerPort: 80
+          protocol: TCP
+      resources: 
+        requests: 
+          memory: "120Mi"
+          cpu: "330Mi"
+        limits:
+          memory: "180Mi"
+          cpu: "370Mi"
+      args:
+        - sleep
+        - 10s

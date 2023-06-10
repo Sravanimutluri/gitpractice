@@ -5,18 +5,18 @@ metadata:
   name: nginx-svc
   labels:
     app: nginx
-    env: dev
     concept: resource
 spec: 
   minReadySeconds: 4
   replicas: 9
   selector:
-    matchLabels: 
-      labels:
-        app: nginx
+    matchLabels:
+      app: nginx
   template:
     metadata:
       name: nginx
+      labels:
+        app: nginx
     spec: 
       containers: 
         - name: nginx
@@ -50,11 +50,9 @@ spec:
               port: 80
               scheme: HTTP
           resources: 
-            claims: 
-              - name: nginx
             requests: 
-              memory: "350Mi"
-              cpu: "850m"
+              memory: "150Mi"
+              cpu: "350m"
             limits: 
-              memory: "250Mi"
-              cpu: "500m"
+              memory: "150Mi"
+              cpu: "400m"
