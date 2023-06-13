@@ -1,0 +1,22 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata: 
+  name: fluentd-ds
+  annotations:
+    kubernetes.io/change-cause: "update to latest"
+spec: 
+  minReadySeconds: 1
+  revisionHistoryLimit: 10
+  selector: 
+    matchLabels: 
+      apps: fluentd
+  template:
+    metadata: 
+      name: fluentd
+      labels:
+        apps: fluentd
+    spec: 
+      containers:
+        - name: fluentd
+          image: fluentd:latest

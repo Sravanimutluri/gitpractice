@@ -1,0 +1,51 @@
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: phpmyadmin-svc
+  labels:
+    app: phpmyadmin
+    env: dev
+spec: 
+  selector: 
+    app: phpmyadmin
+  type: LoadBalancer
+  ports: 
+    - name: phpmyadmin
+      port: 80
+      targetPort: 80
+      protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: phpmyadmin-dep
+  labels:
+    app: phpmyadmin
+spec:
+  minReadySeconds: 3
+  paused: false
+  progressDeadlineSeconds: 600
+  replicas: 4
+  revisionHistoryLimit: 10
+  selector: 
+    matchLabels:
+      app: phpmyadmin
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: 
+      maxSurge: 10%
+      maxUnavailable: 10%
+  template:
+    metadata:
+      name: phpmyadmin-dep
+      labels:
+        app: phpmyadmin
+        env: dev
+    spec: 
+      containers: 
+        - name: phpmyadmin
+          image: phpmyadmin
+          ports: 
+            - containerPort: 80
+              protocol: TCP

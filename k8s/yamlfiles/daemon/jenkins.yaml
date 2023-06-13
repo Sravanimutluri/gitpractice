@@ -1,0 +1,24 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata: 
+  name: jenkins-ds
+  annotations:
+    kubernetes.io/change-cause: "update to latest"
+spec: 
+  minReadySeconds: 3
+  revisionHistoryLimit: 10
+  selector: 
+    matchLabels: 
+      apps: jenkins
+  template:
+    metadata: 
+      name: jenkins
+      labels:
+        apps: jenkins
+    spec: 
+      containers:
+        - name: jenkins
+          image: jenkins/jenkins
+          ports:
+            - containerPort: 80
