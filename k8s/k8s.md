@@ -399,7 +399,28 @@ Maps the Service to the contents of the externalName field (for example, to the 
 * [referhere](C:\Users\DELL\OneDrive\Desktop\gitclassroom\gitpractice\k8s\yamlfiles\deploy\deploy1.yaml) for manifest file
 ![preview](./k8s24.png)
 ![preview](./k8s25.png)
-* 
+* Anther example for deployment by using init containers
+![preview](./k8s26.png)
+![preview](./k8s27.png)
+![preview](./k8s28.png)
+* by using following commands
+---
+* kubectl apply -f deploy2.yaml
+* kubectl get po
+* kubectl get svc
+* kubectl get deploy
+* kubectl describe deploy nginx-dep
+* kubectl rollout history deployment/nginx-dep
+* kubectl rollout status deployment/nginx-dep
+---
+* after changes
+---
+* kubectl rollout history deployment/nginx-dep
+* kubectl rollout status deployment/nginx-dep
+* kubectl get deployments.apps -w
+---
+### Annotations:
+* This can be used for attach arbitrary non-identifying metadata to objects. Clients such as tools and libraries can retrieve this metadata.
 
 
 

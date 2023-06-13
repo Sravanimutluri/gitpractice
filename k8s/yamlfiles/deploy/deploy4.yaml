@@ -20,8 +20,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata: 
   name: nginx-dep
-  labels: 
-    app: nginx
+  annotations:
+    kubernetes.io/change-cause: "update to phpmyadmin"
 spec: 
   minReadySeconds: 2
   minReadySeconds: 5
@@ -44,6 +44,7 @@ spec:
         - name: nginx
           image: nginx
           image: httpd
+          image: phpmyadmin
           imagePullPolicy: Always
           livenessProbe: 
             failureThreshold: 1
