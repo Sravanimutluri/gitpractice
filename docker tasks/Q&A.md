@@ -140,3 +140,16 @@ Step 5: Test the Docker Image.
     * Orchestration
     * Docker daemon
     * Runtime
+## 45. What is runtime?
+* It is a low level operating system to create isolated environments in docker engine.
+## 46. How many Docker components are there?
+* There are three docker components, they are - Docker Client, Docker Host, and Docker Registry.
+    ### Docker Client: 
+        *This component performs “build” and “run” operations for the purpose of opening communication with the docker host.
+    ### Docker Host:
+        * This component has the main docker daemon and hosts containers and their associated images. The daemon establishes a connection with the docker registry.
+    ### Docker Registry:
+        * This component stores the docker images. There can be a public registry or a private one. The most famous public registries are Docker Hub and Docker Cloud.
+## 47. What is Docker orchestration?
+* Docker orchestration is a set of practices and technologies for managing Docker containers at large scale.
+## 48. 

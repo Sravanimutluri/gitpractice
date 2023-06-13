@@ -52,3 +52,9 @@ spec:
       args:
         - sleep
         - 10s
+      - name: init-myservice
+          image: busybox:1.28
+          command: 
+            - 'sh' 
+            - '-c' 
+            - "until nslookup nginx-svc.default.svc.cluster.local; do echo waiting for myservice; sleep 2; done"

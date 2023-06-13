@@ -1,0 +1,74 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: nginx-dep
+  labels: 
+    apps: nginx
+    env: dev
+    concept: understanding
+spec: 
+  minReadySeconds: 2
+  replicas: 7
+  selector:
+    matchLabels: 
+      apps: nginx
+      env: dev
+      concept: understanding
+    strategy:
+      type: RollingUpdate
+        rollingUpdate: 
+          maxSurge: 25%
+          maxUnavailable: 25%
+  template:
+    metadata: 
+      name: nginx-dep
+      labels: 
+      apps: nginx
+      env: dev
+      concept: understanding
+    spec: 
+      containers:
+        - name: nginx
+          image: nginx
+          imagePullPolicy: Always
+          livenessProbe: 
+            failureThreshold: 1
+            initialDelaySeconds: 1
+            periodSeconds: 1
+            successThreshold: 1
+            timeoutSeconds: 10
+            httpGet: 
+              path: /
+              port: 80
+          readinessProbe: 
+            ailureThreshold: 1
+            initialDelaySeconds: 1
+            periodSeconds: 1
+            successThreshold: 1
+            timeoutSeconds: 10
+            httpGet: 
+              path: /
+              port: 80
+          ports: 
+            - containerPort: 80
+              protocol: TCP
+          resources: 
+            requests: 
+              memory: "120Mi"
+              cpu: "330Mi"
+            limits:
+              memory: "180Mi"
+              cpu: "370Mi"
+      initContainers: 
+        - name: alpine
+          image: alpine
+          args: 
+            - sleep
+            - 10s
+        - name: init-myservice
+          image: busybox
+          args: 
+            - 'sh' 
+            - '-c' 
+            - "until nslookup nginx-svc.default.svc.cluster.local; do echo waiting for myservice; sleep 2; done"

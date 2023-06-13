@@ -399,7 +399,7 @@ Maps the Service to the contents of the externalName field (for example, to the 
 * [referhere](C:\Users\DELL\OneDrive\Desktop\gitclassroom\gitpractice\k8s\yamlfiles\deploy\deploy1.yaml) for manifest file
 ![preview](./k8s24.png)
 ![preview](./k8s25.png)
-
+* 
 
 
 
