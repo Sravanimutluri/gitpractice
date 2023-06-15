@@ -32,7 +32,7 @@
 ## 10. Declarative vs Imperative
     * Declarative: What we have and trying to get what we want write in yaml file
     * Imperative: run the yaml file by using command lines interface (CLI)
-    ![preview](./k8s1.png)
+![preview](./k8s1.png)
 ## 11. Pet Vs Cattle
     * Pet: It is static infrastructure. If one pod is failed then we repaired and use here.
     * Cattle: It is elastic infrastructure. If one pod is failed then we left and replace with new pod.
@@ -379,7 +379,8 @@ Maps the Service to the contents of the externalName field (for example, to the 
     ##### tcp:
         * send tcp request
 * Run Pods with specific Resources (CPU/Memory)
-* [referhere] (C:\Users\DELL\OneDrive\Desktop\gitclassroom\gitpractice\k8s\yamlfiles\sevice5.yaml) for manifestfile
+* [Referhere] 
+(C:\Users\DELL\OneDrive\Desktop\gitclassroom\gitpractice\k8s\yamlfiles\sevice5.yaml) for manifestfile
 ![preview](./k8s23.png)
 ### Container Types in Pods
 * We have 3 types of containers
@@ -443,6 +444,99 @@ Maps the Service to the contents of the externalName field (for example, to the 
 * kubectl get nodes
 * kubectl rollout history ds fluentd-ds
 ---
+### Scheduling Pods
+* In Kubernetes, scheduling refers to making sure that Pods are matched to Nodes so that the kubelet can run them. Preemption is the process of terminating Pods with lower Priority so that Pods with higher Priority can schedule on Nodes. Eviction is the process of terminating one or more Pods on Nodes.
+* possible ways
+    ##### node selector
+        *  nodeSelector is the early Kubernetes feature designed for manual Pod scheduling. The basic idea behind the nodeSelector is to allow a Pod to be scheduled only on those nodes that have label(s) identical to the label(s) defined in the nodeSelector.
+    ##### affinities
+        * a feature that enables administrators to match pods according to the labels on nodes. It is similar to nodeSelector but provides more granular control over the selection process.
+    ##### taints and tolerations
+        * Taints are a Kubernetes node property that enable nodes to repel certain pods. Tolerations are a Kubernetes pod property that allow a pod to be scheduled on a node with a matching taint. Let's use an example to demonstrate the benefits of taints and tolerations.
+### Node Selectors
+* We have added manifests with pod and service. Refer Here for manifests
+* We have two nodes lets attach the following labels
+    * node 0: purpose: poc
+    * node 1: purpose: testing
+* When we have tried to create a pod with nodeSelector 
+    * matching purpose: poc
+* it was created on node 0
+* when we created a pod with 
+    * purpose: testing
+* it created in node 1 
+* when created a pod with 
+    * purpose: development 
+* it was in pending state (not created)
+### Headless Service
+* Headless service will not have cluster ip
+* Headless service returns the ips of the pods returned by selector.
+* This is used in stateful sets
+### Storage Solutions in K8s
+* Stateful applications store data locally. In Containers the data created locally will be lost once you delete it. 
+* So to solve this in docker we have used volumes.
+* Volumes have a lifecycle which has no relation to container lifecycle (refer docker containers, image layers, volumes)
+* IN k8s we are running docker containers, k8s is an orchestration solutions.
+* Lets see what are options for storage provisioning in k8s.
+    * Volumes
+    * Persistent Volumes
+    * Projected Volumes
+    * Ephemeral Volumes
+    * Storage Classes
+    * Dynamic Volume Provisioning
+    * Volume Snapshots
+    * Volume Snapshot Classes
+    * CSI Volume Cloning
+    * Storage Capacity
+    * Node-specific Volume Limits
+    * Volume Health Monitoring
+    * Windows Storage
+* The most widely used storage types
+    * Volumes
+    * Persistent Volumes
+    * Storage Classes
+    * Persistent Volume Claims
+#### Volumes
+* Volumes can be mounted to containers and they have lifetime equivalent to Pods.
+* The types of volumes
+    * storage on cloud
+    * ebs
+    * azure disk
+    * efs
+    * azure file
+    * gcs
+    * empty dir
+    * hostPath
+### Persistent Volumes
+* These volumes will have a lifetime different than Pod i.e. they exist even after pod is dead.
+* PVC: Persistent Volumes Claims
+* example
+![preview](./k8s29.png)
+![preview](./k8s30.png)
+* Now lets modify the spec to add mysql related environment variables
+* [referhere](C:\Users\DELL\OneDrive\Desktop\gitclassroom\gitpractice\k8s\yamlfiles\volumes\pvc2.yaml) for env
+![preview](./k8s31.png)
+![preview](./k8s32.png)
+![preview](./k8s33.png)
+* now delete pod and recreate and check for the data created
+#### static provisioning of volume
+* If you want to scale Pods we can use
+    * Replica Sets
+    * Deployments
+### StatefulSets
+* StatefulSet is the workload API object used to manage stateful applications.
+* Manages the deployment and scaling of a set of Pods, and provides guarantees about the ordering and uniqueness of these Pods.
+* Statefulset is like deployment with replicas.
+* But each pod gets its own volume.
+* Stateful Set is for stateful applications
+* When we create replicas in Stateful Set we get predictable names
+* We can access individual pod, by creating headless service and by using ...svc.cluster.local
+* Lets experiment with stateful sets and create nopcommerce
+![preview](./k8s34.png)
+
+
+
+
+
 
 
 
@@ -465,6 +559,7 @@ Maps the Service to the contents of the externalName field (for example, to the 
 * to check labels < kubectl get po --show-labels >
 * to check services < kubectl get svc -o wide >
 * to print < kubectl exec <pod name> --printenv >
+* to enter in side pod < kubectl exec <pod name> -it -- >
 
 
 
@@ -628,3 +723,6 @@ The Kube-api server process runs on the master node and serves to scale the depl
 * How to schedule a Pod on a Particular node
 * How to stop assigning more pods to a node
 * How to move all the pods running a node to other ndoe
+### 8.nWhen to use nodeSelector?
+* Sometimes, we may want to control which node the pod deploys to. To do that, we can constrain a Pod so that it can only run on particular set of nodes and the recommended approach is using nodeSelector as for the constraint. The nodeSelector is a field of PodSpec that specifies a map of key-value pairs.
+   

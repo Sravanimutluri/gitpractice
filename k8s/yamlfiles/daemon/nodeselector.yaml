@@ -1,0 +1,29 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: nodeselector
+  labels:
+    app: httpd
+    purpose: nodeselector
+spec: 
+  minReadySeconds: 1
+  selector: 
+    matchLabels: 
+      app: httpd
+      purpose: nodeselector
+  template:
+    metadata: 
+      name: nodeselector
+      labels:
+        app: httpd
+        purpose: nodeselector
+    spec: 
+      containers:
+        - name: httpd
+          image: httpd
+          ports: 
+            - containerPort: 80
+          args:
+            - sleep
+            - 10s  

@@ -1,0 +1,74 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: nop
+  annotations:
+    imageregistry: "https://hub.docker.com/"
+spec:
+  minReadySeconds: 1
+  serviceName: nop-svc
+  replicas: 3
+  selector:
+    matchLabels:
+      app: 'nop'
+  template:
+    metadata:
+      name: nop
+      labels:
+        app: 'nop'
+    spec:
+      containers:
+        - name: nop
+          image: manugatla/nopcommerce
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5000
+          volumeMounts:
+            - name: nop
+              mountPath: /nopcommerce
+      initContainers: 
+        - name: delay
+          image: alpine
+          command:
+            - sleep
+            - 15s
+        - name: init-myservice
+          image: busybox:1.28
+          command: 
+            - 'sh' 
+            - '-c' 
+            - "until nslookup nop-svc.default.svc.cluster.local; do echo waiting for myservice; sleep 10; done"
+  volumeClaimTemplates:
+    - metadata:
+        name: nop
+      spec:
+        accessModes: 
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+        storageClassName: managed
+---
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: mysql-dynamic-vol
+  labels: 
+    app: mysql
+    layer: db
+spec:
+  containers: 
+    - name: mysql
+      image: mysql:8
+      ports:
+        - containerPort: 3306
+      env: 
+        - name: MYSQL_ROOT_PASSWORD
+          value: sravani
+        - name: MYSQL_DATABASE
+          value: employee
+        - name: MYSQL_USER
+          value: srinivas
+        - name: MYSQL_PASSWORD
+          value: sravani
