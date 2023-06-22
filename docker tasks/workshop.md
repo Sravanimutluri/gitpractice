@@ -357,7 +357,7 @@ RUN cd /nopCommerce && unzip nopCommerce_4.60.2_NoSource_linux_x64.zip && \
 mkdir bin logs && rm nopCommerce_4.60.2_NoSource_linux_x64.zip
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0
-LABEL author="manu" organization="khaja.tech" project="nop"
+LABEL author="sravani" organization="khaja.tech" project="nop"
 ARG DIRECTORY=/nop
 WORKDIR ${DIRECTORY}
 COPY --from=nopCommerce  /nopCommerce ${DIRECTORY}
