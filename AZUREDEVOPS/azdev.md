@@ -119,5 +119,133 @@ run:
     * Code Commit
     * Bit Bucket
     * Git Lab
+* The storage location is called repositry.
+### Git – Basics
+* Scope of the current discussion would be on how to submit the changes to the Git Repository and how to get latest changes from git repository
+###### Workflow
+* Setting up a GitHub Account
+* Setting up a user details and credentials (key based credentials)
+* Creating a Git Repository, Adding code/docs submitting to the repository
+###### System Setup:
+    * Softwares:
+        * Terminal (Windows)
+        * Git
+        * Chocolatey (Windows)
+        * home brew Mac
+        * Visual Studio Code
+### Git Workflow
+* Git Remote Repositories are hosted by GitHub/GitLab/Azure Source Repos etc
+* If we don’t have the Code in local system, then we clone the code to create local repo
+* Once we have local repo, to get latest changes we use pull
+* We add the changes to the staging area using add and commit the changes to local repo using commit and sync the changes from local to remote repo using push command
+---
+* git status
+* git add .
+* git commit -m "added changes"
+* git push
+* git pull
+---
+* Above commands are used regulary.
+#### Branches in Git
+* Git allows us to work parallely for different use cases
+    * multiple versions of same application
+    * multiple customers for same application
+* HEAD is a pointer which generally points to a branch
+HEAD can be moved from one branch to other using a command called as checkout
+* The moving HEAD is called checkout
+* Now excuite the chrckout command by using the following commands
+---
+* cd onedrive/desktop
+* cd /c/temp
+* ls
+* git clone <git code>
+* ls
+* cd nopcommerce
+* git branch
+* git branch -r
+* git checkout master
+* git branch
+* git branch -r
+* git remote add azure <git code> git@github.com:nopSolutions/nopCommerce.git
+* git pull azure master
+* git branch -r
+---
+* By using Checkout command we can change one branch to another branch.
+![preview](./images/azdev2.png)
+![preview](./images/azdev3.png)
+![preview](./images/azdev4.png)
+* Things to digest
+    * default branch: master
+    * default remote: origin
+    * remote branch: name of remote/name of branch
+##### Building and Packaging the code
+* Building the code and packaging the code to the suitable format for end deployment is very technology specific i.e. it is different depending on programming languages.
+* Programming Languages can be categorized into 3 formats
+    * Compiler based:
+        * A compiler is a special program that translates a programming language's source code into machine code, bytecode or another programming language. The source code is typically written in a high-level, human-readable language such as Java or C++.
+    * Interpreter based
+        * An Interpreter directly executes instructions written in a programming or scripting language without previously converting them to an object code or machine code. Examples of interpreted languages are Perl, Python and Matlab.
+    * Hybrid
+        * Hybrid is like a compiler but not compiler. Hybrid is like a interpreter but not interpreter.
+* 
 
 
+
+###### Dependecny Managment
+* To develop any application , there will be lots of dependencies on other libraries/sdks
+* sdks is some of the reusual code already written
+* before building/packaging we need to download these dependencies
+    * nodejs npm
+    * python pip
+    * .net nuget
+    * java mvn
+###### Test Executions
+* We would be running
+    * unit tests (test code by writing code) it is generlly wriiten by developers
+    * integration tests
+        * unit test
+        * ui test
+        * api test
+    * Functional tests
+        * ui tests (simulate user) some user is track this => selenium, cypress, qtp…
+        * api tests (postman, rest assured) if ui test not there then we use api test.
+    * Performance tests:
+        * load testing harness (jmeter, load runner) 
+* What we should know for ci/cd
+    * command to invoke tests
+    * where will be test results
+    * converting test results to some common formats (junit xml)
+###### Java Based Applications
+* To build Java Based applications, we have many tools
+    * ANT
+    * Maven
+    * Gradle
+* Maven is populer in java based application.
+* In this case we will be using a maven based java application
+    * JDK = 17
+    * MVN 3 +
+    * prject: springpetclinic
+* This will be excuted manually in linux machine by using the following commands.
+---
+* sudo apt update
+* sudo apt install openjdk-17-jdk maven -y
+* git clone https://github.com/spring-projects/spring-petclinic.git
+* cd spring-petclinic
+* mvn package  # creates package, run unit tests
+---
+* to write a pipeline for spring petclinic in git
+--- 
+git clone
+branch: main
+mvn package
+
+---
+triggers:
+  - main
+tasks:
+  - name: build package
+    mvn@3:
+      goal: package
+      testResults: '**/*.xml'
+
+---
