@@ -73,6 +73,7 @@
 * ls
 ---
 * Pipeline in Jenkins
+```json
 ---
 pipeline {
     agent any
@@ -89,9 +90,9 @@ pipeline {
         }
     }
 }
-
----
+```
 * Pipeline in Azure DevOps
+```yaml
 ---
 steps:
 - task: Maven@4
@@ -108,8 +109,7 @@ run:
   artifacts:
     paths:
       - gameoflife-web/target/*.war
-
----
+```
 * Version control system is GIT
 ### Git
 * Git is a Distributed Version Control System
@@ -187,10 +187,6 @@ HEAD can be moved from one branch to other using a command called as checkout
         * An Interpreter directly executes instructions written in a programming or scripting language without previously converting them to an object code or machine code. Examples of interpreted languages are Perl, Python and Matlab.
     * Hybrid
         * Hybrid is like a compiler but not compiler. Hybrid is like a interpreter but not interpreter.
-* 
-
-
-
 ###### Dependecny Managment
 * To develop any application , there will be lots of dependencies on other libraries/sdks
 * sdks is some of the reusual code already written
@@ -233,12 +229,19 @@ HEAD can be moved from one branch to other using a command called as checkout
 * cd spring-petclinic
 * mvn package  # creates package, run unit tests
 ---
+![preview](./images/azdev5.png)
+![preview](./images/azdev6.png)
+![preview](./images/azdev7.png)
+![preview](./images/azdev8.png)
+![preview](./images/azdev9.png)
+
 * to write a pipeline for spring petclinic in git
 --- 
 git clone
 branch: main
 mvn package
 
+```yaml
 ---
 triggers:
   - main
@@ -247,5 +250,232 @@ tasks:
     mvn@3:
       goal: package
       testResults: '**/*.xml'
+```
+* .net framework versions:
+    * .net 2,3,4 (Windows)
+    * .net 5 + (Linux)
+        * .net core
+        * aspnet core
+* The order is like this [restore, build, publish]
+* Build the nopCommerce by using .netcore 7 software
+* Manual steps
+---
+dotnet --version
+sudo apt-get update (update the packages and install dotnet)
+sudo apt-get install -y dotnet-sdk-7.0
+dotnet --version
+dotnet --help
+dotnet build --help
 
 ---
+* build steps
+---
+git clone <gitcode>
+cd nopCommerce
+dotnet build src/NopCommerce.sln
+dotnet --list-sdks
+cd src
+dotnet build NopCommerce.sln
+dotnet restore NopCommerce.sln
+cd ..
+git checkout master
+dotnet restore NopCommerce.sln
+dotnet build NopCommerce.sln
+dotnet test
+
+---
+#### Azure DevOps
+* Azure DevOps offers services to manage whole project
+    * Project Management
+        * Planning
+            * Agile Boards:
+                * An agile board is the visual 
+                representation of an agile development process. The board lets you view the current status of each task, group related tasks, estimate your efforts, and track the progress toward completion for each task. The columns on the board represent the development cycle.
+            * Issue Tracker:
+                * BuildMaster is designed to continuously deliver your applications and components from source code to production, helping all stakeholders track changes to each release.
+        * Execution
+            * Wiki Pages:
+                * Azure DevOps Wiki is a documentation solution within the Azure DevOps Suite.
+            * Test Management:
+                * Azure Test Plans is a test management module within Azure DevOps that lets users manage test plans, test suites, and test cases for everyone in the software development process.
+    * DevOps:
+        * VCS:
+            * Azure Source Repos
+                * Git
+                * TFVC (Team Foundation Version Control):
+                    * Version control systems consist of software that helps you track changes you make in your code over time.
+        * Pipelines:
+            * Build Pipelines
+            * Release Pipelines
+        * Artifacts:
+            * Azure Artifacts enables developers to share their code efficiently and manage all their packages from one place.
+* Azure DevOps can be used by two ways
+    * Self-Hosted 
+    * Cloud Hosted
+* Azure DevOps Services: Cloud Hosted Version of Azure DevOps
+##### YAML [yet another markup language]
+* YAML is a data represntation language.
+* YAML is name value pair collection
+* YAML represents name value pair as <name>: <value>
+* Names generally are strings/text and value can be of any type.
+* Types:
+    * Simple
+        * Text/String
+        * number
+        * boolean
+    * Complex
+        * list
+        * object/map
+* Generally yaml used for some configuration purposes will have predefined structure/schema
+#### Azure DevOps Pipeline
+* Azure DevOps Pipelines are expressed in yaml formats in git repositories generally with name <azure-pipelines.yaml>
+* Pipeline:
+    * Where should it execute? => Agents
+    * When should it run => Trigger
+    * What should happend when pipeline executes
+        * Stages
+        * Jobs
+        * Steps
+* When pipeline is executed it is execute with code from version control already cloned and in the branch specified
+###### Agents in Azure DevOps Pipeline
+* Azure DevOps Pipelines have two types of Agents
+    * Microsoft hosted Agents
+        * Size is always fixed Standard_D2S i.e. 2 vcpu's 8 GB RAM
+        * When to use:
+            * Build/Deploy uses standard tools/softwares and if the configuration required matches the above statement
+            * No/Little configuration is what you like in CI/CD pipelines for executions
+* Self Hosted Agents
+    * You need to configure agent to connect to azure devops
+* Exercise: Setting up agent to build jdk 17 and maven based softwares
+* Create a linux vm
+* install jdk 17 and maven
+```
+sudo apt update 
+sudo apt install openjdk-17-jdk maven -y
+```
+* Now we create agent pool
+![preview](./images/azdev10.png)
+![preview](./images/azdev11.png)
+![preview](./images/azdev12.png)
+![preview](./images/azdev13.png)
+![preview](./images/azdev14.png)
+![preview](./images/azdev15.png)
+* Copy and save this token on notpad once it close then we regenrate only we did not get this token again.
+![preview](./images/azdev16.png)
+* Now select the token we get the options
+    * Revoke == delete
+    * Edit == If chages are there
+    * Regenrate == to get the token
+![preview](./images/azdev17.png)
+* get the url of our organization this is also copy and save the notepad. We will use again.
+![preview](./images/azdev18.png)
+![preview](./images/azdev19.png)
+* We create linux machine so we select the only this option only. copy and paste the download code on VM.
+![preview](./images/azdev20.png)
+![preview](./images/azdev21.png)
+![preview](./images/azdev22.png)
+![preview](./images/azdev23.png)
+![preview](./images/azdev24.png)
+* Here the url and token used.
+![preview](./images/azdev25.png)
+![preview](./images/azdev26.png)
+![preview](./images/azdev27.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Virtual Network
+Load Balancer
+Application Gateway
+VPN Gateway
+Azure DNSContent Delivery Network
+Azure DDoS Protection
+Azure CDN
+Traffic Manager
+Azure ExpressRoute
+Network Watcher
+Azure Firewall
+Azure Firewall Manager
+Virtual WAN
+Azure Front Door
+Azure Bastion
+Azure Private Link
+Azure Internet Analyzer
+Network security Group
+ssl certificate
+Hub and Spoke network topology in Azure
+
+
+
+
+wsdqwyycjp6fyle7c4hio6vapm5hh37rnjnc5e5fbsuatvzcce3a
+
+
+https://dev.azure.com/mutlurisrinivas
+
+
+* In azure devops Variables is called predefined variables.
+* Expressions are used for condition statement
+* 
+
+
+
+
+
+
+
+
+
+
+
+
+
+gameoflife pipeline microsoft hosted
+using schema
+pipeline is a collection jobs
+
+
+```yaml
+---
+trigger:
+  - master
+
+jobs:
+  - job: buildjob
+    displayName: Build and Package Game of life
+    pool: ubuntu-22.04
+    steps:
+      - task: Maven@3
+        inputs:
+          mavenPOMFile: 'pom.xml'
+          goals: 'package'
+          publishJUnitResults: true
+          testResultsFiles: '**/surefire-reports/TEST-*.xml'
+          javaHomeOption: 'JDKVersion'
+          jdkVersionOption: '1.8'
+          mavenVersionOption: 'Default'
+```
