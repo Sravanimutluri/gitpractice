@@ -379,7 +379,7 @@ sudo apt install openjdk-17-jdk maven -y
 * Here the url and token used.
 ![preview](./images/azdev25.png)
 ![preview](./images/azdev26.png)
-![preview](./images/azdev27.png)
+
 * Build a pipeline for maven package
 ```yaml
 ---
@@ -578,9 +578,8 @@ jobs:
 
 
 
-3ne7jhcmvsyl6254a7qr6gofazud64kl4ta2rtu47pnz2qgeofja
 
-
+52jgnheuo77pywght43a6ttgnypcwp4icnexyxws4pryas3oxzsa
 
 https://dev.azure.com/mutlurisrinivas
 
