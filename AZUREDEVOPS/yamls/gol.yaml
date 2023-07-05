@@ -2,9 +2,8 @@
 trigger:
   - main
 pool:
-  vmImage: ubuntu-20.04
-variables:
-  - goals: 'package'
+  name: Default
+
 parameters:
   - name: mavengoal
     displayName: Maven Goal
@@ -12,7 +11,7 @@ parameters:
     default: parameters
     values: 
       - package
-      - ubuntu-20.04
+      - Default
       - install
 jobs:
   - job: buildgameoflifepackage
@@ -21,7 +20,7 @@ jobs:
       - task: Maven@4
         inputs:
           mavenPOMFile: 'pom.xml'
-          goals: 'package'
+          goals: ${{ parameters.mavenGoal }}
           publishJUnitResults: true
           testResultsFiles: '**/surefire-reports/TEST-*.xml'
           javaHomeOption: 'JDKVersion'
