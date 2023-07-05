@@ -380,6 +380,193 @@ sudo apt install openjdk-17-jdk maven -y
 ![preview](./images/azdev25.png)
 ![preview](./images/azdev26.png)
 ![preview](./images/azdev27.png)
+* Build a pipeline for maven package
+```yaml
+---
+trigger: 
+  - master
+
+pool: ubuntu-latest
+
+stages:
+  - stage: stage1
+    displayName: FIRST stage
+    jobs:
+      - job: Buildcode
+        displayName: Build MAVEN
+        steps:
+          - task: Maven@3
+            inputs:
+              mavenPOMFile: 'pom.xml'
+              goal: 'package'
+              publishJUnitResults: true
+              testResultsFiles: '**/surefire-reports/TEST-*.xml'
+              javaHomeOption: 'JDKVersion'
+              jdkVersionOption: 'default'
+              jdkArchitectureOption: 'x64'
+              mavenVersionOption: 'Default'
+```
+* Build a pipeline for Docker
+```yaml
+---
+trigger:
+  - master
+  
+pool: 
+  vmImage: ubuntu-latest 
+stages:
+  - stage: Build
+    displayName: Build code
+    jobs:
+      - job: buildcode
+        displayName: Build code
+        steps:
+          - task: Docker@2
+            inputs:
+              containerRegistry: dockerRegistryServiceConnection
+              command: 'buildAndPush'
+              Dockerfile: '**/Dockerfile'
+              buildContext: '**'
+              addPipelineData: true
+              addBaseImageData: true
+```
+* Pipeline for job
+```yaml
+---
+trigger:
+  - master
+pool: ubuntu-latest
+jobs:
+  - deployment: Deploycode
+    displayName: Deploy code
+    strategy:
+      runOnce:
+        preDeploy: 
+          steps: 
+            - task: Maven@4
+              inputs:
+                mavenPOMFile: 'pom.xml'
+                goal: 'package'
+                publishJUnitResults: true
+                testResultsFiles: '**/surefire-reports/TEST-*.xml'
+                javaHomeOption: 'JDKVersion'
+                jdkVersionOption: 'default'
+          steps:
+            - task: MSBuild@1
+              inputs:
+                solution: '**/*.sln'
+                msbuildLocationMethod: 'version'
+                msbuildVersion: 'latest'                
+```
+* Pipeline for nopcommerce
+```yaml
+trigger:
+  - master
+pool: 
+  vmImage: ubuntu-latest
+steps: 
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'build'
+      project: src/NopCommerce.sln
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'restore'
+      project: src/NopCommerce.sln
+```
+* Pipeline for nopcommerce
+```yaml
+---
+trigger:
+  - master
+pool: ubuntu-latest
+stages:
+  - stage: buildcode
+    displayName: Build Code
+    jobs: 
+      - job: buildjob
+        displayName: Build job
+        steps:
+          - task: DotNetCoreCLI@2
+            inputs: 
+              command: 'build'
+              projects: src/NopCommerce.sln
+          - task: DotNetCoreCLI@2
+            inputs: 
+              command: 'restore'
+              projects: src/NopCommerce.sln
+```
+* Gameoflife
+```yaml
+---
+trigger:
+  - main
+pool: 
+  vmImage: ubuntu-22.04
+jobs:
+  - job: buildgameoflife
+    displayName: Build game-of-life
+  steps:
+    - task: Maven@4
+      inputs: 
+        mavenPOMFile: 'pom.xml'
+        goal: 'package'
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        javaHomeOption: 'JDKVersion'
+        jdkVersionOption: '1.8'
+        mavenVersionOption: 'Default'
+    - task: CopyFiles@2
+      inputs:
+        Contents: '**/target/gameoflife.war'
+        TargetFolder: $(Build.ArtifactStagingDirectory)
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'GameOfLifeArtifacts'
+        publishLocation: 'Container'
+```
+* 
+```yaml
+---
+trigger:
+  - main
+pool:
+  vmImage: ubuntu-20.04
+variables:
+  - goals: 'package'
+parameters:
+  - name: mavengoal
+    displayName: Maven Goal
+    type: string
+    default: parameters
+    values: 
+      - package
+      - ubuntu-20.04
+      - install
+jobs:
+  - job: buildgameoflifepackage
+    displayName: Build game-of-life package
+    steps:
+      - task: Maven@4
+        inputs:
+          mavenPOMFile: 'pom.xml'
+          goals: 'package'
+          publishJUnitResults: true
+          testResultsFiles: '**/surefire-reports/TEST-*.xml'
+          javaHomeOption: 'JDKVersion'
+          jdkVersionOption: '1.8'
+      - task: CopyPublishBuildArtifacts@1
+        inputs:
+          Contents: '**/target/gameoflife.war'
+          ArtifactName: 'GameOfLifeArtifacts'
+          ArtifactType: 'Container'
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+          ArtifactName: 'GameOfLifeArtifacts'
+          publishLocation: 'Container'
+```
 
 
 
@@ -408,26 +595,8 @@ sudo apt install openjdk-17-jdk maven -y
 
 
 
-Virtual Network
-Load Balancer
-Application Gateway
-VPN Gateway
-Azure DNSContent Delivery Network
-Azure DDoS Protection
-Azure CDN
-Traffic Manager
-Azure ExpressRoute
-Network Watcher
-Azure Firewall
-Azure Firewall Manager
-Virtual WAN
-Azure Front Door
-Azure Bastion
-Azure Private Link
-Azure Internet Analyzer
-Network security Group
-ssl certificate
-Hub and Spoke network topology in Azure
+
+
 
 
 

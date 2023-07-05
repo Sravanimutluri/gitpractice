@@ -1,0 +1,38 @@
+---
+trigger:
+  - main
+pool:
+  vmImage: ubuntu-20.04
+variables:
+  - goals: 'package'
+parameters:
+  - name: mavengoal
+    displayName: Maven Goal
+    type: string
+    default: parameters
+    values: 
+      - package
+      - ubuntu-20.04
+      - install
+jobs:
+  - job: buildgameoflifepackage
+    displayName: Build game-of-life package
+    steps:
+      - task: Maven@4
+        inputs:
+          mavenPOMFile: 'pom.xml'
+          goals: 'package'
+          publishJUnitResults: true
+          testResultsFiles: '**/surefire-reports/TEST-*.xml'
+          javaHomeOption: 'JDKVersion'
+          jdkVersionOption: '1.8'
+      - task: CopyPublishBuildArtifacts@1
+        inputs:
+          Contents: '**/target/gameoflife.war'
+          ArtifactName: 'GameOfLifeArtifacts'
+          ArtifactType: 'Container'
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+          ArtifactName: 'GameOfLifeArtifacts'
+          publishLocation: 'Container'
