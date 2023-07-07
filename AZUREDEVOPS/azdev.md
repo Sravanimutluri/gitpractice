@@ -604,6 +604,54 @@ jobs:
 
 
 
+```yaml
+---
+trigger:
+  - master
+pool: 
+  name: Azure Pipelines
+  VmImage: ubuntu-20.04
+variables:
+  name: package
+parameters:
+  - name: dotnetgoal
+    displayName: Dotnet Goal
+    type: string
+    default: dotnetgoal
+    values: 
+      - package
+      - Default
+      - install 
+
+stages:
+  - stage: buildcode
+    displayName: Build Code
+    jobs: 
+      - job: buildjob
+        displayName: Build job
+        steps:
+          - task: DotNetCoreCLI@2
+            inputs: 
+              command: 'build'
+              projects: src/NopCommerce.sln
+          - task: DotNetCoreCLI@2
+            inputs: 
+              command: 'restore'
+              projects: src/NopCommerce.sln
+          - task: CopyFiles@2
+            inputs:
+              Contents: '**/target/Nop.*.Tests.dll'
+              TargetFolder: $(Build.ArtifactStagingDirectory)
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+              ArtifactName: 'Nop_Artifacts'
+              publishLocation: 'Container'
+```
+
+
+
+
 
 
 
