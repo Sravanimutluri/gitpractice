@@ -479,7 +479,7 @@ steps:
 ---
 trigger:
   - master
-pool: ubuntu-latest
+pool: Default
 stages:
   - stage: buildcode
     displayName: Build Code
@@ -551,7 +551,7 @@ jobs:
       - task: Maven@4
         inputs:
           mavenPOMFile: 'pom.xml'
-          goals: 'package'
+          goals: '${{ parameters.mavenGoal }}'
           publishJUnitResults: true
           testResultsFiles: '**/surefire-reports/TEST-*.xml'
           javaHomeOption: 'JDKVersion'
@@ -567,6 +567,39 @@ jobs:
           ArtifactName: 'GameOfLifeArtifacts'
           publishLocation: 'Container'
 ```
+* spring pet clnic
+```yaml
+---
+trigger:
+  - main
+pool: Default
+variables: 
+  - name: package
+parameters: 
+  - name: mavenGoal
+    displayName: Maven goal
+    type: string
+jobs:
+  - job: buildspringpetclinic
+    displayName: Build spring-petclinic
+    steps: 
+      - task: Maven@3
+        inputs:
+          mavenPOMFile: 'pom.xml'
+          goal: '${{ parameters.mavenGoal }}'
+          publishJUnitResults: true
+          testResultsFiles: '**/surefire-reports/TEST-*.xml'
+          
+      - task: CopyFiles@2
+        inputs:
+          Contents: '**/target/spring-petclinic*.jar'
+          TargetFolder: $(Build.ArtifactStagingDirectory)
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+              ArtifactName: 'SpringPetclinicArtifacts'
+              publishLocation: 'Container'
+```
 
 
 
@@ -579,9 +612,20 @@ jobs:
 
 
 
-52jgnheuo77pywght43a6ttgnypcwp4icnexyxws4pryas3oxzsa
+
+pvwcewpbq3au64tmtfuen3cxprjysllc4bietexdjp4jni5koi7a
 
 https://dev.azure.com/mutlurisrinivas
+
+
+
+wget https://vstsagentpackage.azureedge.net/agent/3.220.5/vsts-agent-linux-x64-3.220.5.tar.gz
+mkdir agent
+cd agent
+tar xvzf ~/vsts-agent-linux-x64-3.220.5.tar.gz
+./config.sh
+./run.sh
+
 
 
 
